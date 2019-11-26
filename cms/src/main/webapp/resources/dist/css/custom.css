@@ -1,0 +1,273 @@
+.item-pic {
+	position: relative;
+	display: inline-block;
+}
+
+.item-pic:hover .delete {
+	display: block;
+}
+
+.delete {
+	padding-top: 10px;	
+	padding-right: 20px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: none;
+}
+
+.delete a {
+	color: #000;
+}
+
+.main {
+	padding-top: 10px;	
+	padding-left: 20px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	/*  display: none;*/
+}
+
+.add {
+	padding-top: 5px;	
+	padding-right: 5px;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.main a {
+	color: #000;
+}
+
+#paging{text-align:center;}
+a.paging-item,a.paging-side{margin:0 .25em;}
+a.paging-item.selected{font-weight:bold;}
+
+.ui-datepicker { width: 17em; padding: .2em .2em 0; z-index:9999 !important; }
+
+.quiztable-title-yellow {
+  background-color: #f39c12;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.quiztable-title-purple {
+  background-color: #605ca865;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.quiztable-title-blue {
+  background-color: #00c0ef65;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.quiztable-content {
+  background-color: #ddd;
+  border-radius: 10px;
+  text-align: right;
+}
+
+.quiztable-content-center {
+  background-color: #ddd;
+  border-radius: 10px;
+  text-align: center;
+  vertical-align: center;
+}
+
+.quiztable-content-center-white {
+  border-radius: 10px;
+  text-align: center;
+  vertical-align: center;
+}
+
+.f12 {
+	font-size: 12px !important;
+}
+
+.f13 {
+	font-size: 13px !important;
+}
+
+.f14 {
+	font-size: 14px !important;
+}
+
+.f15 {
+	font-size: 15px !important;
+}
+
+.f16 {
+	font-size: 16px !important;
+}
+
+.f17 {
+	font-size: 17px !important;
+}
+
+.f18 {
+	font-size: 18px !important;
+}
+
+.f19 {
+	font-size: 19px !important;
+}
+
+.f20 {
+	font-size: 20px !important;
+}
+
+.f21 {
+	font-size: 21px !important;
+}
+
+.f22 {
+	font-size: 22px !important;
+}
+
+.f23 {
+	font-size: 23px !important;
+}
+
+.f24 {
+	font-size: 24px !important;
+}
+
+.f25 {
+	font-size: 25px !important;
+}
+
+.f27 {
+	font-size: 27px !important;
+}
+
+.f28 {
+	font-size: 28px !important;
+}
+
+.f29 {
+	font-size: 29px !important;
+}
+
+.f30 {
+	font-size: 30px !important;
+}
+
+.f31 {
+	font-size: 31px !important;
+}
+
+.f32 {
+	font-size: 32px !important;
+}
+
+.f33 {
+	font-size: 33px !important;
+}
+
+.f35 {
+	font-size: 35px !important;
+}
+
+.form-control-sm {
+    width: 50%;
+    height: 28px;
+    margin: 3px auto 0;
+    padding: 0;
+    font-size: 1.125rem;
+}
+
+.paging {
+	text-align: center;
+}
+
+#inpView1, #inpView2, #inpView3, #inpView4 {
+	height: 52px;
+}
+
+.w-25 { width: 25%; min-width: 300px; }
+.p-t-4 { top: 4px; }
+
+.box-blackwords { height: 600px; overflow-y: auto; }
+
+.no-margin { margin: 0 !important; }
+
+.btn-outline { color: #5bc0de; border-radius: 0; border-color: #5bc0de; }
+.input-group .input-group-addon { background-color: #eee; }
+.preview { max-width: 100%; max-height: 100%; }
+
+.wrap-text {
+	/* text-overflow:ellipsis;
+	white-space:nowrap;
+	word-wrap:normal;
+	overflow:hidden; */
+	
+	/* word-wrap: break-word;
+ 	text-overflow: ellipsis;
+	display: inline-block;
+	white-space:nowrap;
+ 	max-width:60%; */
+ 	
+ 	display: inline-block; 
+ 	max-width: 500px;
+ 	white-space: nowrap; 
+ 	overflow: hidden; 
+ 	text-overflow: ellipsis;
+}
+
+.form-span {
+	padding:10px 20px;
+	text-align:center;
+	font-weight:bold;
+}
+
+.form-answer {
+	font-weight:bold;
+	color:white;
+	/* background-color:#3d9970; */
+	background-color:#367fa9;
+}
+
+
+.player-buttons{
+	position: relative;
+    /* background: url('http://cdn1.iconfinder.com/data/icons/iconslandplayer/PNG/64x64/CircleBlue/Play1Pressed.png') center center no-repeat; */
+    height: 45px;
+    left: 78%;
+    margin: -64px 0 0 -64px;
+    position: absolute;
+    top: 23%;
+    width: 150px;
+    font-weight:bold;
+    z-index: 1; 
+    border:solid 2px white; 
+}
+
+.rounded-left {
+    -moz-border-radius:30px 30px 30px 30px;  // rounds corners for firefox
+    border-radius:30px 30px 30px 30px;  //rounds corners for other browsers
+    border:solid 1px #000;
+    padding:5px 10px;
+    background-color:#f39c12;
+    color:white;
+    float:left;
+    text-align:left;
+}
+
+.rounded-right {
+    -moz-border-radius:30px 30px 30px 30px;  // rounds corners for firefox
+    border-radius:30px 30px 30px 30px;  //rounds corners for other browsers
+    border:solid 1px #000;
+    padding:5px 10px;
+    /* background-color:#dd4b39; */
+    background-color:black;
+    color:white;
+    float:left;
+    text-align:right;
+}
