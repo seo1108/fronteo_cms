@@ -58,7 +58,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <span class="f24">Press</span> 
-          <span class="f14" style="padding-left:20px;">전체Press</span> <span class="f14" style="color:blue;"><fmt:formatNumber value="${total}" pattern="#,###" /></span>
+          <span class="f14" style="padding-left:20px;">전체 Press</span> <span class="f14" style="color:blue;"><fmt:formatNumber value="${totalCnt}" pattern="#,###" /></span>
         </section>
 
         <!-- Main content -->
@@ -67,7 +67,7 @@
         	<div class="row">
 				<div class="col-xs-12">
 
-					<div class="box box-danger">
+					<div class="box box-danger" style="display:none;">
 						<div class="box-body">
 						<form id="ReqForm" class="form-inline col-md">
 							<table style="width:100%;">
@@ -98,7 +98,7 @@
 						
 					</div> 
 					
-					<div style="text-align: center; padding-bottom:10px;">
+					<div style="text-align: center; padding-bottom:10px;display:none;">
 						<button type="submit" class="btn btn-success btn-sm" onclick="clearFilter();">기본설정</button>
 						<button type="submit" class="btn btn-primary btn-sm" onclick="search();">검색</button>									
 					</div>
@@ -200,7 +200,7 @@
 		
 		
 		
-		//$("#divList").load("botListResult?&rowCount=${rowCount}&page=1", function(data) {});
+		$("#divList").load("pressList?&rowCount=${rowCount}&page=1", function(data) {});
     });
 	
 	function search() {
@@ -218,10 +218,9 @@
 		
 		var keyword = $('#keyword').val();
 		
-/* 		$("#divList").html('');
-		$("#divList").load("memberListResult?rowCount="+rowCount+"&regFromDate="+regFromDate
-				+"&regToDate="+regToDate+"&logFromDate="+logFromDate+"&logToDate="+logToDate+"&keyword="+keyword
-				+"&page=1", function(data) {}); */
+ 		$("#divList").html('');
+		$("#divList").load("pressList?rowCount="+rowCount+"&regFromDate="+regFromDate+"&regToDate="+regToDate
+				+"&keyword="+keyword+"&page=1", function(data) {}); 
 	}
 	
 	function clearFilter() {

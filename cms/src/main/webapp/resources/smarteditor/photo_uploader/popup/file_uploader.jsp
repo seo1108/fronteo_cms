@@ -46,8 +46,8 @@ if (ServletFileUpload.isMultipartContent(request)){
                     //파일 기본경로
                     String dftFilePath = request.getSession().getServletContext().getRealPath("/");
                     //파일 기본경로 _ 상세경로
-                    //String filePath = dftFilePath + "resources" + File.separator + "smarteditor" + File.separator + "photo_uploader" + File.separator + "uploadImg" + File.separator;
-        			String filePath = "/data/cms_resources/smarteditor/photo_uploader/uploadImg/";
+                    String filePath = dftFilePath + "resources" + File.separator + "uploadimages" + File.separator;
+        			//String filePath = "/data/cms_resources/smarteditor/photo_uploader/uploadImg/";
                      
                     File file = null;
                     file = new File(filePath);
@@ -80,7 +80,8 @@ if (ServletFileUpload.isMultipartContent(request)){
                                 // img 태그의 title 옵션에 들어갈 원본파일명
                     return3 += "&sFileName="+ name;
                     //return3 += "&sFileURL=/resources/smarteditor/photo_uploader/uploadImg/"+realFileNm;
-                    return3 += "&sFileURL=/aimg/smarteditor/photo_uploader/uploadImg/"+realFileNm;
+                    //return3 += "&sFileURL=/aimg/smarteditor/photo_uploader/uploadImg/"+realFileNm;
+                    return3 += "&sFileURL=/resources/uploadimages/"+realFileNm;
                 }
             }else {
                   return3 += "&errstr=error";

@@ -65,76 +65,77 @@
         <div class="row">
 			<div class="col-xs-12">
 		        <div class="col-xs-12 box box-danger">
-		        	<div style="float:right;padiing-top:100px;padding-top:10px;padding-bottom:10px;">
-			        	<button class="btn btn-warning btn-sm" onclick="">저장 </button>
+		        	<form name="frm" id="frm" method="post" enctype="multipart/form-data" action="">
+		        		<input type="hidden" name="bbsType" id="bbsType" value="P" />
+						<div class="card-body">
+							<table class="table table-striped">
+						        <colgroup>
+						          <col width="10%"/>
+								  <col width="90%"/>
+							    </colgroup>
+						       <tbody>
+						       	<tr>
+					                 <th class="quiztable-content-center-white">NO.</th>
+						             <td>
+						             	<input type="text" name="no" id="no" value="" class="form-control" style="display:inline;" readOnly/>
+						             </td>
+					              </tr>		
+					              <tr>
+					                 <th class="quiztable-content-center-white">작성일</th>
+						             <td>
+						             	<input type="text" name="date" id="regdate" value="" class="form-control" style="display:inline;" readOnly/>
+						             </td>
+					              </tr>		
+					              <tr>
+					                 <th class="quiztable-content-center-white">상태</th>
+						             <td>
+						             	<input type="radio" name="subType" value="1" style="margin-right: 10px;" checked/><span>eDiscovery</span>
+						                <input type="radio" name="subType" value="2" style="margin-right: 10px; margin-left: 50px;" /><span>Business Solution</span>
+						                <input type="radio" name="subType" value="3" style="margin-right: 10px; margin-left: 50px;" /><span>AI Consulting</span>
+						                <input type="radio" name="subType" value="4" style="margin-right: 10px; margin-left: 50px;" /><span>Corporate</span>
+						             </td>   
+					              </tr>			
+						          <tr>
+					                 <th class="quiztable-content-center-white">제목</th>
+						             <td>
+						             	<input type="text" name="title" id="title" value="" class="form-control" style="display:inline;"/>
+						             </td>
+					              </tr>		
+						          <tr>
+					                 <th class="quiztable-content-center-white">상태</th>
+						             <td>
+						             	<input type="radio" name="exposure" value="Y" style="margin-right: 10px;" checked/><span>노출</span>
+						                <input type="radio" name="exposure" value="N" style="margin-right: 10px; margin-left: 50px;" /><span>비노출</span>
+						             </td>   
+					              </tr>		
+						          <tr>
+					                 <th class="quiztable-content-center-white">내용</th>
+						             <td><textarea name="contents" id="contents" rows="22" cols="170"></textarea></td>
+					              </tr>		
+					              <tr>
+					                 <th class="quiztable-content-center-white">URL</th>
+						             <td>
+						             	<input type="text" name="url" id="url" value="" class="form-control" style="display:inline;"/>
+						             </td>
+					              </tr>	
+					              <tr>
+					                 <th class="quiztable-content-center-white">파일첨부</th>
+						             <td>
+						             	<input id="attach" type="file" name="filePath" id="filPath" style="width:100%;"> 
+						             </td>
+					              </tr>		
+							   </tbody>
+				           </table>
+						</div>
+					</form>
+					
+					<div style="float:right;padiing-top:100px;padding-top:10px;padding-bottom:10px;">
+			        	<button class="btn btn-warning" onclick="pressInsert();">저장 </button>
 			        </div>
-							
-					<form name="frm" id="frm" method="post" enctype="multipart/form-data" action="">
-							<div class="card-body">
-								<table class="table table-striped">
-							        <colgroup>
-							          <col width="10%"/>
-									  <col width="90%"/>
-								    </colgroup>
-							       <tbody>
-							       	<tr>
-						                 <th class="quiztable-content-center-white">NO.</th>
-							             <td>
-							             	<input type="text" name="no" id="title" value="" class="form-control" style="display:inline;" readOnly/>
-							             </td>
-						              </tr>		
-						              <tr>
-						                 <th class="quiztable-content-center-white">작성일</th>
-							             <td>
-							             	<input type="text" name="date" id="title" value="" class="form-control" style="display:inline;" readOnly/>
-							             </td>
-						              </tr>		
-						              <tr>
-						                 <th class="quiztable-content-center-white">상태</th>
-							             <td>
-							             	<input type="radio" name="type" value="1" style="margin-right: 10px;" checked/><span>eDiscovery</span>
-							                <input type="radio" name="type" value="2" style="margin-right: 10px; margin-left: 50px;" /><span>Business Solution</span>
-							                <input type="radio" name="type" value="2" style="margin-right: 10px; margin-left: 50px;" /><span>AI Consulting</span>
-							                <input type="radio" name="type" value="2" style="margin-right: 10px; margin-left: 50px;" /><span>Corporate</span>
-							             </td>   
-						              </tr>			
-							          <tr>
-						                 <th class="quiztable-content-center-white">제목</th>
-							             <td>
-							             	<input type="text" name="title" id="title" value="" class="form-control" style="display:inline;"/>
-							             </td>
-						              </tr>		
-							          <tr>
-						                 <th class="quiztable-content-center-white">상태</th>
-							             <td>
-							             	<input type="radio" name="exposure" value="Y" style="margin-right: 10px;" checked/><span>노출</span>
-							                <input type="radio" name="exposure" value="N" style="margin-right: 10px; margin-left: 50px;" /><span>비노출</span>
-							             </td>   
-						              </tr>		
-							          <tr>
-						                 <th class="quiztable-content-center-white">내용</th>
-							             <td><textarea name="content" id="content" rows="22" cols="170"></textarea></td>
-						              </tr>		
-						              <tr>
-						                 <th class="quiztable-content-center-white">URL</th>
-							             <td>
-							             	<input type="text" name="url" id="url" value="" class="form-control" style="display:inline;"/>
-							             </td>
-						              </tr>	
-						              <tr>
-						                 <th class="quiztable-content-center-white">파일첨부</th>
-							             <td>
-							             	<input id="attach" type="file" name="file" id="file" style="width:100%;"> 
-							             </td>
-						              </tr>		
-								   </tbody>
-					           </table>
-							</div>
-						</form>
-						
-			        </div>
-		     	</div>
-		  </div>   	
+			        
+		        </div>
+	     	</div>
+		</div>   	
      	
      	
      	
@@ -160,14 +161,24 @@
     <script src="../resources/dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../resources/dist/js/demo.js"></script>
-    
     <script src="../resources/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
-    
     <script src="../resources/customJS/common.js"></script>
-
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
 	<script type="text/javascript">
-
-	jQuery(document).ready(function(){
+	
+	var oEditors = [];
+	var skinUrl = "../resources/smarteditor/SmartEditor2Skin.html";
+	
+	nhn.husky.EZCreator.createInIFrame({
+	    oAppRef: oEditors,
+	    elPlaceHolder: "contents",
+	    sSkinURI: skinUrl,
+	    fCreator: "createSEditor2"
+	
+	});
+	
+	/* jQuery(document).ready(function(){
 		var oEditors = [];
 		var skinUrl = "../resources/smarteditor/SmartEditor2Skin.html";
 		
@@ -178,7 +189,47 @@
 		    fCreator: "createSEditor2"
 		
 		});
-    });
+    }); */
+	
+	function pressInsert() {
+		// id가 smarteditor인 textarea에 에디터에서 대입
+		oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []); 
+		
+		if($.trim($("#title").val()) ==''){
+			swal("제목을 입력해 주세요.", "info");
+			return false;
+		}
+		
+		//내용체크
+		if($.trim($("#contents").val()) ==''){
+			swal("내용을 입력해 주세요.", "info");
+			return false;
+		}
+		
+		var params = $("#frm").serialize();
+		
+		$.ajax({
+			url: "/board/bbsInsert",
+			type: "post",
+			data: params,
+			success: function(data) {
+				if(data=="ok") {
+					swal("success","게시물이 등록 되었습니다.", "success")
+					.then(function(value)  { 
+						  if(value){
+							  location.href="/board/press";
+						  } 
+				     });
+				} else {
+					swal("등록에 실패하였습니다.","다시 시도해 보시기 바랍니다.", "error");
+				}
+			},
+			error: function(e) {
+				swal("오류가 발생했습니다. 관리자에게 문의하시기 바랍니다.");
+			}
+		});
+		
+	}
 	
 	
 	   

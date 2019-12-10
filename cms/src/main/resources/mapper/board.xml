@@ -5,5 +5,47 @@
 
 <mapper namespace="board">
 
+	<select id="getTotalBbsCount" resultType="hashmap">
+		SELECT count(*) as cnt FROM TB_BBS
+		WHERE 1=1 AND bbsType = #{bbsType}
+	</select>
 	
+	<select id="getBbsList" resultType="hashmap">
+		SELECT 
+			bbsSeq, bbsType, subType, title, exposure, contents, url, filePath, 
+			DATE_FORMAT(startDate,'%Y-%m-%d %H:%i:%s') startDate, DATE_FORMAT(endDate,'%Y-%m-%d %H:%i:%s') endDate, isAnytime,
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate
+		FROM TB_BBS
+		WHERE 1=1
+			AND bbsType	= #{bbsType}
+		<if test='regFromDate != null and regToDate != null and !regFromDate.equals("") and !regToDate.equals("")'>
+			AND DATE(regdate) BETWEEN #{regFromDate} AND #{regToDate}
+		</if>	
+		<if test='keyword != null and !keyword.equals("")'>
+			AND contents like concat('%',  #{keyword}, '%')  
+		</if>	
+		LIMIT #{startIdx}, #{rowCount}
+	</select>
+	
+	<select id="getBbsCount" resultType="hashmap">
+		SELECT count(bbsSeq) cnt
+		FROM TB_BBS
+		WHERE 1=1
+			AND bbsType	= #{bbsType}
+		<if test='regFromDate != null and regToDate != null and !regFromDate.equals("") and !regToDate.equals("")'>
+			AND DATE(regdate) BETWEEN #{regFromDate} AND #{regToDate}
+		</if>
+		<if test='keyword != null and !keyword.equals("")'>
+			AND contents like concat('%',  #{keyword}, '%')  
+		</if>
+		
+	</select>
+	
+	<insert id="insertBbs" parameterType="hashmap">
+		INSERT INTO
+		TB_BBS
+			(bbsType, subType, title, exposure, contents, url, filePath, regdate)
+		VALUES
+			(#{bbsType}, #{subType}, #{title}, #{exposure}, #{contents}, #{url}, #{filePath}, now())	
+	</insert>
 </mapper>
