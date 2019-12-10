@@ -121,7 +121,8 @@
 					              <tr>
 					                 <th class="quiztable-content-center-white">파일첨부</th>
 						             <td>
-						             	<input id="attach" type="file" name="filePath" id="filPath" style="width:100%;"> 
+<!--  						             	<input id="attach" type="file" name="filePath" id="filPath" style="width:100%;"> -->
+						             	<input type="file" name="filePath" id="filePath" style="width:330px;">
 						             </td>
 					              </tr>		
 							   </tbody>
@@ -206,12 +207,25 @@
 			return false;
 		}
 		
-		var params = $("#frm").serialize();
+	 	event.preventDefault();
+		
+		 var form = $('#frm')[0];
+	        
+			// Create an FormData object 
+	     var params = new FormData(form);
+	     console.log(params);
+		
+		//var params = $("#frm").serialize();
 		
 		$.ajax({
 			url: "/board/bbsInsert",
 			type: "post",
+			enctype: 'multipart/form-data',
 			data: params,
+			processData: false,
+            contentType: false,
+			timeout: 600000,
+			cache: false,
 			success: function(data) {
 				if(data=="ok") {
 					swal("success","게시물이 등록 되었습니다.", "success")

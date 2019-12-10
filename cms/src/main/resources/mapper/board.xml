@@ -24,6 +24,7 @@
 		<if test='keyword != null and !keyword.equals("")'>
 			AND contents like concat('%',  #{keyword}, '%')  
 		</if>	
+		ORDER BY regdate DESC
 		LIMIT #{startIdx}, #{rowCount}
 	</select>
 	
