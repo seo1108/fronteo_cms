@@ -130,6 +130,16 @@ public class BoardController {
 			,HttpServletRequest req
             ,HttpServletResponse res) {
 		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			if (null == params.get("type") || "".equals(params.get("type"))) {
+				map = service.getMaxBbsSeq(params);
+			} else if ("edit".equals(params.get("type"))) {
+				map = service.getBbsDetail(params);
+			}
+			
+			map.put("type", params.get("type"));
+			model.addAttribute("data", map);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -137,6 +147,308 @@ public class BoardController {
 			
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("board/pressAdd");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "board/event", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView event(@RequestParam Map<String,Object> params
+			,Model model
+			,HttpServletRequest req
+            ,HttpServletResponse res) {
+		try {
+			params.put("bbsType", "E");
+			Map<String, Object> totalmap = service.getTotalBbsCount(params);
+			long totalCount = Long.parseLong(totalmap.get("cnt").toString());
+			model.addAttribute("rowCount", Const.DEFAULT_RESULT_COUNT);
+			model.addAttribute("totalCnt", totalCount);
+			model.addAttribute("rows", Const.ARR_RESULT_COUNT);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+			
+			
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("board/event");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "board/eventList", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView eventList(@RequestParam Map<String,Object> params, 
+			Model model
+			,HttpServletRequest req
+            ,HttpServletResponse res) {
+		try {
+			params.put("bbsType", "E");
+			int rowCount = Integer.parseInt(params.get("rowCount").toString());
+			int startIdx = 0;
+			int page = Integer.parseInt(Util.checkNull(params.get("page"), "1"));
+			
+			Map<String, Object> map = service.getBbsCount(params);
+			
+			long totalCount = Long.parseLong(map.get("cnt").toString());
+			int totalPage = (int) Math.ceil((double) totalCount / rowCount);
+			startIdx = (page - 1) * rowCount;
+			
+			params.put("reqType", "view");
+			params.put("startIdx", startIdx);
+			params.put("rowCount", rowCount);
+			
+			List<Map<String, Object>> list = service.getBbsList(params);
+			
+			for (Map<String,Object> rmap:list) {
+				if ("1".equals(rmap.get("subType"))) 
+				{
+					rmap.put("subTypeName", "Seminar");
+				} 
+				else if ("2".equals(rmap.get("subType"))) 
+				{
+					rmap.put("subTypeName", "Event");
+				}
+				else if ("3".equals(rmap.get("subType"))) 
+				{
+					rmap.put("subTypeName", "Others");
+				}
+			}
+			
+			model.addAttribute("data", list);
+			model.addAttribute("totalCnt", totalCount);
+			model.addAttribute("page", page);
+			model.addAttribute("totalPage", totalPage);
+			model.addAttribute("regFromDate", params.get("regFromDate"));
+			model.addAttribute("regToDate", params.get("regToDate"));
+			model.addAttribute("rowCount", params.get("rowCount").toString());
+		} catch (Exception ex) {
+			params.put("STATUS", "FAIL");
+			ex.printStackTrace();
+		}
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("board/eventList");
+		
+		return modelAndView;
+	}
+	
+	
+	@RequestMapping(value = "board/eventAdd", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView eventAdd(@RequestParam Map<String,Object> params
+			,Model model
+			,HttpServletRequest req
+            ,HttpServletResponse res) {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			if (null == params.get("type") || "".equals(params.get("type"))) {
+				map = service.getMaxBbsSeq(params);
+			} else if ("edit".equals(params.get("type"))) {
+				map = service.getBbsDetail(params);
+			}
+			
+			map.put("type", params.get("type"));
+			model.addAttribute("data", map);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+			
+			
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("board/eventAdd");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "board/career", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView career(@RequestParam Map<String,Object> params
+			,Model model
+			,HttpServletRequest req
+            ,HttpServletResponse res) {
+		try {
+			params.put("bbsType", "C");
+			Map<String, Object> totalmap = service.getTotalBbsCount(params);
+			long totalCount = Long.parseLong(totalmap.get("cnt").toString());
+			model.addAttribute("rowCount", Const.DEFAULT_RESULT_COUNT);
+			model.addAttribute("totalCnt", totalCount);
+			model.addAttribute("rows", Const.ARR_RESULT_COUNT);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+			
+			
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("board/career");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "board/careerList", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView careerList(@RequestParam Map<String,Object> params, 
+			Model model
+			,HttpServletRequest req
+            ,HttpServletResponse res) {
+		try {
+			params.put("bbsType", "C");
+			int rowCount = Integer.parseInt(params.get("rowCount").toString());
+			int startIdx = 0;
+			int page = Integer.parseInt(Util.checkNull(params.get("page"), "1"));
+			
+			Map<String, Object> map = service.getBbsCount(params);
+			
+			long totalCount = Long.parseLong(map.get("cnt").toString());
+			int totalPage = (int) Math.ceil((double) totalCount / rowCount);
+			startIdx = (page - 1) * rowCount;
+			
+			params.put("reqType", "view");
+			params.put("startIdx", startIdx);
+			params.put("rowCount", rowCount);
+			
+			List<Map<String, Object>> list = service.getBbsList(params);
+			
+			for (Map<String,Object> rmap:list) {
+				if ("1".equals(rmap.get("subType"))) 
+				{
+					rmap.put("subTypeName", "신입");
+				} 
+				else if ("2".equals(rmap.get("subType"))) 
+				{
+					rmap.put("subTypeName", "경력");
+				}
+			}
+			
+			model.addAttribute("data", list);
+			model.addAttribute("totalCnt", totalCount);
+			model.addAttribute("page", page);
+			model.addAttribute("totalPage", totalPage);
+			model.addAttribute("regFromDate", params.get("regFromDate"));
+			model.addAttribute("regToDate", params.get("regToDate"));
+			model.addAttribute("rowCount", params.get("rowCount").toString());
+		} catch (Exception ex) {
+			params.put("STATUS", "FAIL");
+			ex.printStackTrace();
+		}
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("board/careerList");
+		
+		return modelAndView;
+	}
+	
+	
+	@RequestMapping(value = "board/careerAdd", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView careerAdd(@RequestParam Map<String,Object> params
+			,Model model
+			,HttpServletRequest req
+            ,HttpServletResponse res) {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			if (null == params.get("type") || "".equals(params.get("type"))) {
+				map = service.getMaxBbsSeq(params);
+			} else if ("edit".equals(params.get("type"))) {
+				map = service.getBbsDetail(params);
+			}
+			
+			map.put("type", params.get("type"));
+			model.addAttribute("data", map);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+			
+			
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("board/careerAdd");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "board/faq", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView faq(@RequestParam Map<String,Object> params
+			,Model model
+			,HttpServletRequest req
+            ,HttpServletResponse res) {
+		try {
+			params.put("bbsType", "F");
+			Map<String, Object> totalmap = service.getTotalBbsCount(params);
+			long totalCount = Long.parseLong(totalmap.get("cnt").toString());
+			model.addAttribute("rowCount", Const.DEFAULT_RESULT_COUNT);
+			model.addAttribute("totalCnt", totalCount);
+			model.addAttribute("rows", Const.ARR_RESULT_COUNT);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+			
+			
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("board/faq");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "board/faqList", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView faqList(@RequestParam Map<String,Object> params, 
+			Model model
+			,HttpServletRequest req
+            ,HttpServletResponse res) {
+		try {
+			params.put("bbsType", "F");
+			int rowCount = Integer.parseInt(params.get("rowCount").toString());
+			int startIdx = 0;
+			int page = Integer.parseInt(Util.checkNull(params.get("page"), "1"));
+			
+			Map<String, Object> map = service.getBbsCount(params);
+			
+			long totalCount = Long.parseLong(map.get("cnt").toString());
+			int totalPage = (int) Math.ceil((double) totalCount / rowCount);
+			startIdx = (page - 1) * rowCount;
+			
+			params.put("reqType", "view");
+			params.put("startIdx", startIdx);
+			params.put("rowCount", rowCount);
+			
+			List<Map<String, Object>> list = service.getBbsList(params);
+			
+			model.addAttribute("data", list);
+			model.addAttribute("totalCnt", totalCount);
+			model.addAttribute("page", page);
+			model.addAttribute("totalPage", totalPage);
+			model.addAttribute("regFromDate", params.get("regFromDate"));
+			model.addAttribute("regToDate", params.get("regToDate"));
+			model.addAttribute("rowCount", params.get("rowCount").toString());
+		} catch (Exception ex) {
+			params.put("STATUS", "FAIL");
+			ex.printStackTrace();
+		}
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("board/faqList");
+		
+		return modelAndView;
+	}
+	
+	
+	@RequestMapping(value = "board/faqAdd", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView faqAdd(@RequestParam Map<String,Object> params
+			,Model model
+			,HttpServletRequest req
+            ,HttpServletResponse res) {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			if (null == params.get("type") || "".equals(params.get("type"))) {
+				map = service.getMaxBbsSeq(params);
+			} else if ("edit".equals(params.get("type"))) {
+				map = service.getBbsDetail(params);
+			}
+			
+			map.put("type", params.get("type"));
+			model.addAttribute("data", map);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+			
+			
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("board/faqAdd");
 		
 		return modelAndView;
 	}
@@ -153,10 +465,34 @@ public class BoardController {
 //				params.put("filePath", filepath);
 //			}
 			
-			String filepath = ContentFileUpload(req, res);
-			params.put("filePath", filepath);
 			
-			int result = service.insertBbs(params);
+			// 파일이 첨부되지 않았거나, 파일 변경이 없을때
+			if ("P".equals(params.get("bbsType")) || "E".equals(params.get("bbsType"))) { 
+				if ("".equals(params.get("file_route")) || params.get("file_route").toString().contains(Const.BBS_SERVER_PATH)) {
+					params.put("filePath", params.get("file_route"));
+				} else {
+					String filepath = ContentFileUpload(req, res);
+					params.put("filePath", filepath);	
+				}
+			}
+			
+			if ("C".equals(params.get("bbsType"))) {
+				if (null == params.get("isAnytime") || "".equals(params.get("isAnytime"))) {
+					params.put("isAnytime", "N");
+				}
+			}
+			
+			
+			int result = 0;
+			
+			if (null != params.get("updateType") && "edit".equals(params.get("updateType"))) 
+			{
+				result = service.updateBbs(params);
+			}
+			else 
+			{
+				result = service.insertBbs(params);
+			}
 			
 			if (result > 0) {
 				msg = "ok";
@@ -168,6 +504,30 @@ public class BoardController {
 		}
 		
 		return msg;
+	}
+	
+	
+	@RequestMapping(value = "json/deleteBbs", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteBbs(@RequestParam Map<String, Object> params,
+			Model model,
+			HttpServletRequest req, 
+			HttpServletResponse res) {
+		try {
+			String[] targets = params.get("code").toString().split(",");
+			params.put("code", targets);
+			int cnt = service.deleteBbs(params);
+			
+			params.put("STATUS", (cnt > 0) ? "SUCCESS" : "FAIL");
+			params.put("SavedCount", cnt);
+			params.put("RequestCount", targets.length);
+		} catch (Exception e) {
+			
+			params.put("STATUS", "FAIL");
+			e.printStackTrace();
+		}
+		
+		return params;
 	}
 	
 	@ResponseBody
@@ -221,7 +581,9 @@ public class BoardController {
 				resultList.add(file); 
 			}
 			
-			filepath = Const.BBS_SERVER_PATH+filename;
+			if (!"".equals(filename)) {
+				filepath = Const.BBS_SERVER_PATH+filename;
+			}
 			
 			
 		} catch (Exception ex) {

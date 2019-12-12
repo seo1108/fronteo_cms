@@ -23,19 +23,22 @@
 						<i class="fa fa-list"></i> <span>게시판 관리</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 					<ul class="treeview-menu">
-						<li <%=curUri.indexOf("board/press")>0 || curUri.indexOf("board/pressAdd")>0
-  									?"class=\"active\"":"" %>>>
+						<li <%=curUri.indexOf("board/press") > 0
+  									?"class=\"active\"":"" %>>
 							<a href="/board/press"><i class="fa fa-circle-o"></i> <span>Press</span></a>
 						</li>
-						<li>
+						<li <%=curUri.indexOf("board/event") > 0
+  									?"class=\"active\"":"" %>>
 							<a href="/board/event"><i class="fa fa-circle-o"></i> <span>Event</span></a>
 						</li>
-						<li> 
-  							<a href="/board/careers"><i class="fa fa-circle-o"></i> <span>Careers</span>
+						<li <%=curUri.indexOf("board/career") > 0
+  									?"class=\"active\"":"" %>>
+  							<a href="/board/career"><i class="fa fa-circle-o"></i> <span>Careers</span>
 							</a>	
 						</li>	
-						<li> 
-  							<a href="/board/faqs"><i class="fa fa-circle-o"></i> <span>FAQs</span>
+						<li <%=curUri.indexOf("board/faq") > 0
+  									?"class=\"active\"":"" %>>
+  							<a href="/board/faq"><i class="fa fa-circle-o"></i> <span>FAQs</span>
 							</a>	
 						</li>	
 					</ul>

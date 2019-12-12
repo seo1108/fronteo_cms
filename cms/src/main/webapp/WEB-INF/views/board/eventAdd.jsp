@@ -17,7 +17,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Press</title>
+    <title>Event</title>
     
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -57,10 +57,10 @@
           <h1>
           	<c:choose>
                 <c:when test="${not empty data.type && data.type eq 'edit'}">
-                	Press 편집
+                	Event 편집
                 </c:when>
                 <c:otherwise>
-                	Press 등록
+                	Event 등록
                 </c:otherwise>
             </c:choose>    
 						                 
@@ -76,7 +76,7 @@
 		        <div class="col-xs-12 box box-danger">
 		        	<form name="frm" id="frm" method="post" enctype="multipart/form-data" action="">
 		        		<input type="hidden" name="updateType" id="updateType" value="${data.type }" />
-		        		<input type="hidden" name="bbsType" id="bbsType" value="P" />
+		        		<input type="hidden" name="bbsType" id="bbsType" value="E" />
 						<div class="card-body">
 							<table class="table table-striped">
 						        <colgroup>
@@ -102,21 +102,18 @@
 						                 <c:when test="${not empty data.type && data.type eq 'edit'}">
 						                 	<td>
 								             	<input type="radio" name="subType" value="1" style="margin-right: 10px;" 
-								             		<c:if test="${data.subType eq '1'}">checked</c:if>><span>eDiscovery</span>
+								             		<c:if test="${data.subType eq '1'}">checked</c:if>><span>Seminar</span>
 								                <input type="radio" name="subType" value="2" style="margin-right: 10px; margin-left: 50px;" 
-								                	<c:if test="${data.subType eq '2'}">checked</c:if>><span>Business Solution</span>
+								                	<c:if test="${data.subType eq '2'}">checked</c:if>><span>Event</span>
 								                <input type="radio" name="subType" value="3" style="margin-right: 10px; margin-left: 50px;" 
-								                	<c:if test="${data.subType eq '3'}">checked</c:if>><span>AI Consulting</span>
-								                <input type="radio" name="subType" value="4" style="margin-right: 10px; margin-left: 50px;"
-								                	<c:if test="${data.subType eq '4'}">checked</c:if>><span>Corporate</span>
+								                	<c:if test="${data.subType eq '3'}">checked</c:if>><span>Others</span>
 								            </td>
 						                 </c:when>
 						                 <c:otherwise>
 						                 	<td>
-								             	<input type="radio" name="subType" value="1" style="margin-right: 10px;" checked/><span>eDiscovery</span>
-								                <input type="radio" name="subType" value="2" style="margin-right: 10px; margin-left: 50px;" /><span>Business Solution</span>
-								                <input type="radio" name="subType" value="3" style="margin-right: 10px; margin-left: 50px;" /><span>AI Consulting</span>
-								                <input type="radio" name="subType" value="4" style="margin-right: 10px; margin-left: 50px;" /><span>Corporate</span>
+								             	<input type="radio" name="subType" value="1" style="margin-right: 10px;" checked/><span>Seminar</span>
+								                <input type="radio" name="subType" value="2" style="margin-right: 10px; margin-left: 50px;" /><span>Event</span>
+								                <input type="radio" name="subType" value="3" style="margin-right: 10px; margin-left: 50px;" /><span>Others</span>
 								            </td>   
 						                 </c:otherwise>
 					                 </c:choose>

@@ -17,7 +17,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Press</title>
+    <title>Careers</title>
     
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -35,6 +35,10 @@
     <link rel="stylesheet" href="../resources/plugins/select2/select2.min.css">
     <link rel="stylesheet" href="../resources/plugins/jQuerySimpleDPicker/jquery.simple-dtpicker.css">
     <link rel="stylesheet" href="../resources/dist/css/custom.css">
+    
+    <!-- daterange picker -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+   
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -57,10 +61,10 @@
           <h1>
           	<c:choose>
                 <c:when test="${not empty data.type && data.type eq 'edit'}">
-                	Press 편집
+                	Careers 편집
                 </c:when>
                 <c:otherwise>
-                	Press 등록
+                	Careers 등록
                 </c:otherwise>
             </c:choose>    
 						                 
@@ -76,7 +80,10 @@
 		        <div class="col-xs-12 box box-danger">
 		        	<form name="frm" id="frm" method="post" enctype="multipart/form-data" action="">
 		        		<input type="hidden" name="updateType" id="updateType" value="${data.type }" />
-		        		<input type="hidden" name="bbsType" id="bbsType" value="P" />
+		        		<input type="hidden" name="bbsType" id="bbsType" value="C" />
+		        		<input type="hidden" name="startDate" id="startDate" value="${data.startDate }" />
+		        		<input type="hidden" name="endDate" id="endDate" value="${data.endDate }" />
+		        		<input type="hidden" name="isAnytime" id="isAnytime" value="${data.isAnytime }" />
 						<div class="card-body">
 							<table class="table table-striped">
 						        <colgroup>
@@ -93,7 +100,7 @@
 					              <tr>
 					                 <th class="quiztable-content-center-white">작성일</th>
 						             <td>
-						             	<input type="text" name="date" id="regdate" value="${data.regdate}" class="form-control" style="display:inline;" readOnly/>
+						             	<input type="text" name="regdate" id="date" value="${data.regdate}" class="form-control" style="display:inline;" readOnly/>
 						             </td>
 					              </tr>		
 					              <tr>
@@ -102,21 +109,15 @@
 						                 <c:when test="${not empty data.type && data.type eq 'edit'}">
 						                 	<td>
 								             	<input type="radio" name="subType" value="1" style="margin-right: 10px;" 
-								             		<c:if test="${data.subType eq '1'}">checked</c:if>><span>eDiscovery</span>
+								             		<c:if test="${data.subType eq '1'}">checked</c:if>><span>신입</span>
 								                <input type="radio" name="subType" value="2" style="margin-right: 10px; margin-left: 50px;" 
-								                	<c:if test="${data.subType eq '2'}">checked</c:if>><span>Business Solution</span>
-								                <input type="radio" name="subType" value="3" style="margin-right: 10px; margin-left: 50px;" 
-								                	<c:if test="${data.subType eq '3'}">checked</c:if>><span>AI Consulting</span>
-								                <input type="radio" name="subType" value="4" style="margin-right: 10px; margin-left: 50px;"
-								                	<c:if test="${data.subType eq '4'}">checked</c:if>><span>Corporate</span>
+								                	<c:if test="${data.subType eq '2'}">checked</c:if>><span>경력</span>
 								            </td>
 						                 </c:when>
 						                 <c:otherwise>
 						                 	<td>
-								             	<input type="radio" name="subType" value="1" style="margin-right: 10px;" checked/><span>eDiscovery</span>
-								                <input type="radio" name="subType" value="2" style="margin-right: 10px; margin-left: 50px;" /><span>Business Solution</span>
-								                <input type="radio" name="subType" value="3" style="margin-right: 10px; margin-left: 50px;" /><span>AI Consulting</span>
-								                <input type="radio" name="subType" value="4" style="margin-right: 10px; margin-left: 50px;" /><span>Corporate</span>
+								             	<input type="radio" name="subType" value="1" style="margin-right: 10px;" checked/><span>신입</span>
+								                <input type="radio" name="subType" value="2" style="margin-right: 10px; margin-left: 50px;" /><span>경력</span>
 								            </td>   
 						                 </c:otherwise>
 					                 </c:choose>
@@ -125,6 +126,21 @@
 					                 <th class="quiztable-content-center-white">제목</th>
 						             <td>
 						             	<input type="text" name="title" id="title" value="${data.title}" class="form-control" style="display:inline;"/>
+						             </td>
+					              </tr>
+					              <tr>
+					                 <th class="quiztable-content-center-white">모집기간</th>
+						             <td>
+						             	<div class="input-group date">
+	        		         				<div class="input-group-addon">
+	                		   					<i class="fa fa-calendar"></i>
+	                 						</div>
+	                 						<input type="text" class="form-control pull-left" style="width:250px;" id="careerDate">
+	                 						
+	                 						<label style="margin-left:100px;font-size:14px;font-weight:normal;" for="chkAnytime"><input class="form-check-input" type="checkbox" id="chkAnytime" name="chkAnytime" />&nbsp;&nbsp;&nbsp;&nbsp;상시 모집</label> 
+	                 						
+	                 						<!-- <input type="checkbox" name="chkAnytime" id="chkAnytime" style="padding-left:50px;" value="" class="form-check-input" /> -->
+	                 					</div>	
 						             </td>
 					              </tr>		
 						          <tr>
@@ -149,28 +165,7 @@
 						          <tr>
 					                 <th class="quiztable-content-center-white">내용</th>
 						             <td><textarea name="contents" id="contents" rows="22" cols="170">${data.contents}</textarea></td>
-					              </tr>		
-					              <tr>
-					                 <th class="quiztable-content-center-white">URL</th>
-						             <td>
-						             	<input type="text" name="url" id="url" value="${data.url}" class="form-control" style="display:inline;"/>
-						             </td>
-					              </tr>	
-					              <tr>
-					                 <th class="quiztable-content-center-white">파일첨부</th>
-						             <td>
-<!--  						             	<input id="attach" type="file" name="filePath" id="filPath" style="width:100%;">
-						             	<input type="file" name="filePath" id="filePath" style="width:330px;" value="${data.filePath}"> -->
-						             	<div class="file_input">
-						             	    <label>
-										        파일 찾기
-										        <input type="file" name="filePath" id="filePath" onchange="javascript:document.getElementById('file_route').value=this.value">
-										    </label>
-										    <input type="text" style="margin-bottom:5px;" readonly="readonly" title="File Route" id="file_route" name="file_route" class="form-control" value="${data.filePath}">
-										    <button class="btn btn-danger btn-sm" style="margin-bottom:5px;" onclick="event.preventDefault();$('#file_route').val('');">파일삭제 </button>
-										</div>
-						             </td>
-					              </tr>		
+					              </tr>
 							   </tbody>
 				           </table>
 						</div>
@@ -215,7 +210,72 @@
     <script src="../resources/customJS/common.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
+	 <!-- date-range-picker -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	
 	<script type="text/javascript">
+	
+	jQuery(document).ready(function(){
+		$('#careerDate').daterangepicker({
+			autoUpdateInput: true,
+			ranges: {
+				'오늘': [moment(), moment()],
+				'어제': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+				'1주일': [moment().subtract(1, 'weeks'), moment().subtract(1, 'days')],
+				'1개월': [moment().subtract(1, 'months'), moment().subtract(1, 'days')],
+				'3개뭘': [moment().subtract(3, 'months'), moment().subtract(1, 'days')],
+				'6개월': [moment().subtract(6, 'months'), moment().subtract(1, 'days')],
+				'1년': [moment().subtract(1, 'years'), moment().subtract(1, 'days')]
+			},
+			locale: {
+				format: "YYYY-MM-DD"
+			}
+		}, function(start_date, end_date) {
+			$('#careerDate').val(start_date.format('YYYY-MM-DD')+' - '+end_date.format('YYYY-MM-DD'));
+		    
+		    $('#startDate').val(start_date.format('YYYYMMDD'));
+		    $('#endDate').val(end_date.format('YYYYMMDD'));
+		    $("#chkAnytime").prop('checked', false); 
+		    $('#isAnytime').val('N');
+		});
+		
+		$("#chkAnytime").change(function(){
+	        if($("#chkAnytime").is(":checked")) {
+	        	$('#isAnytime').val('Y');
+	        	$('#careerDate').val('');
+	        	$('#startDate').val('');
+			    $('#endDate').val('');
+	        } else {
+	        	$('#isAnytime').val('N');
+	        }
+	    });
+		
+		
+		var type = '${data.type}';
+		var isAny = '${data.isAnytime}';
+		
+		if (type == 'edit') {
+			if (isAny == 'N') {
+				var start = '${data.startDate}';
+				var end = '${data.endDate}';
+				
+				$('#careerDate').val(start +' - '+end);
+		    
+			    $('#startDate').val(start.replaceAll("-", ""));
+			    $('#endDate').val(end.replaceAll("-", ""));
+			} else {
+				$("#chkAnytime").prop('checked', true); 
+				
+				$('#careerDate').val('');
+	        	$('#startDate').val('');
+			    $('#endDate').val('');
+			}
+		}
+		
+		
+    });
+	
 	
 	var oEditors = [];
 	var skinUrl = "../resources/smarteditor/SmartEditor2Skin.html";
@@ -227,19 +287,6 @@
 	    fCreator: "createSEditor2"
 	
 	});
-	
-	/* jQuery(document).ready(function(){
-		var oEditors = [];
-		var skinUrl = "../resources/smarteditor/SmartEditor2Skin.html";
-		
-		nhn.husky.EZCreator.createInIFrame({
-		    oAppRef: oEditors,
-		    elPlaceHolder: "content",
-		    sSkinURI: skinUrl,
-		    fCreator: "createSEditor2"
-		
-		});
-    }); */
 	
 	function bbsInsert() {
     	// id가 smarteditor인 textarea에 에디터에서 대입
@@ -329,6 +376,10 @@
 			}
 		});
     }
+    
+    String.prototype.replaceAll = function(org, dest) {
+	    return this.split(org).join(dest);
+	}
 	</script>
   </body>
 </html>

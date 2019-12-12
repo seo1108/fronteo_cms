@@ -34,8 +34,28 @@ public class BoardDao {
 		return rmap;
 	}
 	
+	public Map<String, Object> getBbsDetail(Map<String, Object> map) throws Exception {
+		Map<String, Object> rmap = sqlSession.selectOne(namespace + ".getBbsDetail", map);
+		return rmap;
+	}
+	
+	public Map<String, Object> getMaxBbsSeq(Map<String, Object> map) throws Exception {
+		Map<String, Object> rmap = sqlSession.selectOne(namespace + ".getMaxBbsSeq", map);
+		return rmap;
+	}
+	
 	public int insertBbs(Map<String, Object> map) throws Exception {
 		int cnt = sqlSession.update(namespace + ".insertBbs", map);
+		return cnt;
+	}
+	
+	public int updateBbs(Map<String, Object> map) throws Exception {
+		int cnt = sqlSession.update(namespace + ".updateBbs", map);
+		return cnt;
+	}
+	
+	public int deleteBbs(Map<String, Object> map) throws Exception {
+		int cnt = sqlSession.update(namespace + ".deleteBbs", map);
 		return cnt;
 	}
 }

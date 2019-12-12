@@ -17,7 +17,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Press</title>
+    <title>FAQs</title>
     
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -57,10 +57,10 @@
           <h1>
           	<c:choose>
                 <c:when test="${not empty data.type && data.type eq 'edit'}">
-                	Press 편집
+                	FAQs 편집
                 </c:when>
                 <c:otherwise>
-                	Press 등록
+                	FAQs 등록
                 </c:otherwise>
             </c:choose>    
 						                 
@@ -76,7 +76,7 @@
 		        <div class="col-xs-12 box box-danger">
 		        	<form name="frm" id="frm" method="post" enctype="multipart/form-data" action="">
 		        		<input type="hidden" name="updateType" id="updateType" value="${data.type }" />
-		        		<input type="hidden" name="bbsType" id="bbsType" value="P" />
+		        		<input type="hidden" name="bbsType" id="bbsType" value="F" />
 						<div class="card-body">
 							<table class="table table-striped">
 						        <colgroup>
@@ -97,31 +97,6 @@
 						             </td>
 					              </tr>		
 					              <tr>
-					                 <th class="quiztable-content-center-white">구분</th>
-					                 <c:choose>
-						                 <c:when test="${not empty data.type && data.type eq 'edit'}">
-						                 	<td>
-								             	<input type="radio" name="subType" value="1" style="margin-right: 10px;" 
-								             		<c:if test="${data.subType eq '1'}">checked</c:if>><span>eDiscovery</span>
-								                <input type="radio" name="subType" value="2" style="margin-right: 10px; margin-left: 50px;" 
-								                	<c:if test="${data.subType eq '2'}">checked</c:if>><span>Business Solution</span>
-								                <input type="radio" name="subType" value="3" style="margin-right: 10px; margin-left: 50px;" 
-								                	<c:if test="${data.subType eq '3'}">checked</c:if>><span>AI Consulting</span>
-								                <input type="radio" name="subType" value="4" style="margin-right: 10px; margin-left: 50px;"
-								                	<c:if test="${data.subType eq '4'}">checked</c:if>><span>Corporate</span>
-								            </td>
-						                 </c:when>
-						                 <c:otherwise>
-						                 	<td>
-								             	<input type="radio" name="subType" value="1" style="margin-right: 10px;" checked/><span>eDiscovery</span>
-								                <input type="radio" name="subType" value="2" style="margin-right: 10px; margin-left: 50px;" /><span>Business Solution</span>
-								                <input type="radio" name="subType" value="3" style="margin-right: 10px; margin-left: 50px;" /><span>AI Consulting</span>
-								                <input type="radio" name="subType" value="4" style="margin-right: 10px; margin-left: 50px;" /><span>Corporate</span>
-								            </td>   
-						                 </c:otherwise>
-					                 </c:choose>
-					              </tr>			
-						          <tr>
 					                 <th class="quiztable-content-center-white">제목</th>
 						             <td>
 						             	<input type="text" name="title" id="title" value="${data.title}" class="form-control" style="display:inline;"/>
@@ -149,28 +124,7 @@
 						          <tr>
 					                 <th class="quiztable-content-center-white">내용</th>
 						             <td><textarea name="contents" id="contents" rows="22" cols="170">${data.contents}</textarea></td>
-					              </tr>		
-					              <tr>
-					                 <th class="quiztable-content-center-white">URL</th>
-						             <td>
-						             	<input type="text" name="url" id="url" value="${data.url}" class="form-control" style="display:inline;"/>
-						             </td>
-					              </tr>	
-					              <tr>
-					                 <th class="quiztable-content-center-white">파일첨부</th>
-						             <td>
-<!--  						             	<input id="attach" type="file" name="filePath" id="filPath" style="width:100%;">
-						             	<input type="file" name="filePath" id="filePath" style="width:330px;" value="${data.filePath}"> -->
-						             	<div class="file_input">
-						             	    <label>
-										        파일 찾기
-										        <input type="file" name="filePath" id="filePath" onchange="javascript:document.getElementById('file_route').value=this.value">
-										    </label>
-										    <input type="text" style="margin-bottom:5px;" readonly="readonly" title="File Route" id="file_route" name="file_route" class="form-control" value="${data.filePath}">
-										    <button class="btn btn-danger btn-sm" style="margin-bottom:5px;" onclick="event.preventDefault();$('#file_route').val('');">파일삭제 </button>
-										</div>
-						             </td>
-					              </tr>		
+					              </tr>
 							   </tbody>
 				           </table>
 						</div>

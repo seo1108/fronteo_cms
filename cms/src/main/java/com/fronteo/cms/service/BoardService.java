@@ -26,7 +26,23 @@ public class BoardService {
 		return dao.getBbsCount(map);
 	}
 	
+	public Map<String, Object> getBbsDetail(Map<String, Object> map) throws Exception {
+		return dao.getBbsDetail(map);
+	}
+	
+	public Map<String, Object> getMaxBbsSeq(Map<String, Object> map) throws Exception {
+		return dao.getMaxBbsSeq(map);
+	}
+	
 	public int insertBbs(Map<String, Object> map) throws Exception {
 		return dao.insertBbs(map);
+	}
+	
+	public int updateBbs(Map<String, Object> map) throws Exception {
+		return dao.updateBbs(map);
+	}
+	
+	public int deleteBbs(Map<String, Object> map) throws Exception {
+		return dao.deleteBbs(map);
 	}
 }

@@ -17,7 +17,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Press</title>
+    <title>Careers</title>
     
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -57,8 +57,8 @@
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <span class="f24">Press</span> 
-          <span class="f14" style="padding-left:20px;">전체 Press</span> <span class="f14" style="color:blue;"><fmt:formatNumber value="${totalCnt}" pattern="#,###" /></span>
+          <span class="f24">Careers</span> 
+          <span class="f14" style="padding-left:20px;">전체 Careers</span> <span class="f14" style="color:blue;"><fmt:formatNumber value="${totalCnt}" pattern="#,###" /></span>
         </section>
 
         <!-- Main content -->
@@ -201,7 +201,7 @@
 		
 		
 		
-		$("#divList").load("pressList?&rowCount=${rowCount}&page=1", function(data) {});
+		$("#divList").load("careerList?&rowCount=${rowCount}&page=1", function(data) {});
     });
 	
 	function search() {
@@ -220,7 +220,7 @@
 		var keyword = $('#keyword').val();
 		
  		$("#divList").html('');
-		$("#divList").load("pressList?rowCount="+rowCount+"&regFromDate="+regFromDate+"&regToDate="+regToDate
+		$("#divList").load("careerList?rowCount="+rowCount+"&regFromDate="+regFromDate+"&regToDate="+regToDate
 				+"&keyword="+keyword+"&page=1", function(data) {}); 
 	}
 	
@@ -230,7 +230,7 @@
 	}
 	
 	function go_bbs_add() {
-		$.redirect( "pressAdd", { }, "POST", "" );
+		$.redirect( "careerAdd", { }, "POST", "" );
 	}
 	</script>
   </body>

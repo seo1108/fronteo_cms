@@ -70,7 +70,7 @@
 						var regFromDate = '${regFromDate}';
 						var regToDate = '${regToDate}';
 						var keyword = '${keyword}';
-						$("#divList").load("pressList?rowCount="+rowCount+"&regFromDate="+regFromDate+"&regToDate="+regToDate
+						$("#divList").load("careerList?rowCount="+rowCount+"&regFromDate="+regFromDate+"&regToDate="+regToDate
 								+"&keyword="+keyword+"&page="+page, function(data) {});
 					}
 				});
@@ -88,7 +88,7 @@
 		});
 		
 		function go_detail(bbsSeq) {
-			$.redirect( "pressAdd", { bbsSeq : bbsSeq, type : 'edit', bbsType : 'P' }, "POST", "" );
+			$.redirect( "careerAdd", { bbsSeq : bbsSeq, type : 'edit', bbsType : 'C' }, "POST", "" );
 		}
 		
 		function delete_bbs() {
@@ -139,7 +139,7 @@
 			var page = '${page}';
 			
 			$("#divList").html('');
-			$("#divList").load("pressList?rowCount="+rowCount+"&regFromDate="+regFromDate+"&regToDate="+regToDate
+			$("#divList").load("careerList?rowCount="+rowCount+"&regFromDate="+regFromDate+"&regToDate="+regToDate
 					+"&keyword="+keyword+"&page="+page, function(data) {});
 		}
 	</script>	

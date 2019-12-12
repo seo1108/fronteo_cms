@@ -42,11 +42,110 @@
 		
 	</select>
 	
+	<select id="getBbsDetail" resultType="hashmap">
+		SELECT
+			bbsSeq, bbsType, subType, title, exposure, contents, url, filePath, 
+			DATE_FORMAT(startDate,'%Y-%m-%d') startDate, DATE_FORMAT(endDate,'%Y-%m-%d') endDate, isAnytime,
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate
+		FROM TB_BBS
+		WHERE bbsSeq = #{bbsSeq}
+			AND bbsType	= #{bbsType}
+	</select> 
+	
+	<select id="getMaxBbsSeq" resultType="hashmap">
+		SELECT IFNULL(MAX(bbsSeq+1), 1) as bbsSeq, CURDATE() as regdate FROM TB_BBS
+	</select>
+	
 	<insert id="insertBbs" parameterType="hashmap">
-		INSERT INTO
-		TB_BBS
-			(bbsType, subType, title, exposure, contents, url, filePath, regdate)
-		VALUES
-			(#{bbsType}, #{subType}, #{title}, #{exposure}, #{contents}, #{url}, #{filePath}, now())	
+		<if test='bbsType != null and bbsType.equals("P")'>
+			INSERT INTO
+			TB_BBS
+				(bbsType, subType, title, exposure, contents, url, filePath, regdate)
+			VALUES
+				(#{bbsType}, #{subType}, #{title}, #{exposure}, #{contents}, #{url}, #{filePath}, now())
+		</if>
+		<if test='bbsType != null and bbsType.equals("E")'>
+			INSERT INTO
+			TB_BBS
+				(bbsType, subType, title, exposure, contents, url, filePath, regdate)
+			VALUES
+				(#{bbsType}, #{subType}, #{title}, #{exposure}, #{contents}, #{url}, #{filePath}, now())
+		</if>
+		<if test='bbsType != null and bbsType.equals("C")'>
+			INSERT INTO
+			TB_BBS
+				(bbsType, subType, title, exposure, contents, startDate, endDate, isAnytime, regdate)
+			VALUES
+				(#{bbsType}, #{subType}, #{title}, #{exposure}, #{contents}, #{startDate}, #{endDate}, #{isAnytime}, now())
+		</if>	
+		<if test='bbsType != null and bbsType.equals("F")'>
+			INSERT INTO
+			TB_BBS
+				(bbsType, title, exposure, contents, regdate)
+			VALUES
+				(#{bbsType}, #{title}, #{exposure}, #{contents}, now())
+		</if>			
 	</insert>
+	
+	<update id="updateBbs" parameterType="hashmap">
+		<if test='bbsType != null and bbsType.equals("P")'>
+			UPDATE TB_BBS
+			SET
+				subType = #{subType},
+				title = #{title},
+				exposure = #{exposure},
+				contents = #{contents},
+				url = #{url},
+				filePath = #{filePath},
+				moddate = now()
+			WHERE 
+				bbsSeq = ${bbsSeq}
+		</if>
+		<if test='bbsType != null and bbsType.equals("E")'>
+			UPDATE TB_BBS
+			SET
+				subType = #{subType},
+				title = #{title},
+				exposure = #{exposure},
+				contents = #{contents},
+				url = #{url},
+				filePath = #{filePath},
+				moddate = now()
+			WHERE 
+				bbsSeq = ${bbsSeq}
+		</if>
+		<if test='bbsType != null and bbsType.equals("C")'>
+			UPDATE TB_BBS
+			SET
+				subType = #{subType},
+				title = #{title},
+				exposure = #{exposure},
+				contents = #{contents},
+				startDate = #{startDate},
+				endDate = #{endDate},
+				isAnytime = #{isAnytime},
+				moddate = now()
+			WHERE 
+				bbsSeq = ${bbsSeq}
+		</if>			
+		<if test='bbsType != null and bbsType.equals("F")'>
+			UPDATE TB_BBS
+			SET
+				title = #{title},
+				exposure = #{exposure},
+				contents = #{contents},
+				moddate = now()
+			WHERE 
+				bbsSeq = ${bbsSeq}
+		</if>	
+	</update>
+	
+	<delete id="deleteBbs" parameterType="hashmap">
+		DELETE FROM TB_BBS
+		WHERE
+			bbsSeq IN 
+			<foreach collection="code" item="item" open="(" separator="," close=")" >
+				#{item}
+			</foreach>
+	</delete>
 </mapper>
