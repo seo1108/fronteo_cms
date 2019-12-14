@@ -200,13 +200,13 @@
 		oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []); 
 		
 		if($.trim($("#title").val()) ==''){
-			swal("제목을 입력해 주세요.", "info");
+			swal("제목을 입력해 주세요.", "", "info");
 			return false;
 		}
 		
 		//내용체크
 		if($.trim($("#contents").val()) ==''){
-			swal("내용을 입력해 주세요.", "info");
+			swal("내용을 입력해 주세요.", "", "info");
 			return false;
 		}
 		

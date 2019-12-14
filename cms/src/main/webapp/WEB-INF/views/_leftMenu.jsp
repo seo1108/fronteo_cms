@@ -49,8 +49,9 @@
 						<i class="fa fa-object-ungroup"></i> <span>페이지 관리</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 					<ul class="treeview-menu">
-						<li>
-							<a href="/page/homepage"><i class="fa fa-circle-o"></i> <span>Home</span></a>
+						<li <%=curUri.indexOf("page/banner") > 0
+  									?"class=\"active\"":"" %>>
+							<a href="/page/banner"><i class="fa fa-circle-o"></i> <span>Home</span></a>
 						</li>
 						<li>
 							<a href="/page/ediscovrybook"><i class="fa fa-circle-o"></i> <span>eDiscovory Book</span></a>
@@ -63,20 +64,25 @@
 						<i class="fa fa-book"></i> <span>콘텐츠 관리</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 					<ul class="treeview-menu">
-  						<li>
-							<a href="/contents/brochure"><i class="fa fa-circle-o"></i>Company Brochure </a>
+  						<li <%=curUri.indexOf("contents/brochure") > 0
+  									?"class=\"active\"":"" %>>
+							<a href="/contents/brochure"><i class="fa fa-circle-o"></i>Company Brochure</a>
    						</li>
-  						<li>
-							<a href="/contents/priefs"><i class="fa fa-circle-o"></i>Product Briefs</a>
+  						<li <%=curUri.indexOf("contents/briefs") > 0
+  									?"class=\"active\"":"" %>>
+							<a href="/contents/briefs"><i class="fa fa-circle-o"></i>Product Briefs</a>
    						</li>
-   						<li>
-							<a href="/contents/videos"><i class="fa fa-circle-o"></i>Videos</a>
+   						<li <%=curUri.indexOf("contents/video") > 0
+  									?"class=\"active\"":"" %>>
+							<a href="/contents/video"><i class="fa fa-circle-o"></i>Videos</a>
    						</li>	
-   						<li>
+   						<li <%=curUri.indexOf("contents/ebook") > 0
+  									?"class=\"active\"":"" %>>
 							<a href="/contents/ebook"><i class="fa fa-circle-o"></i>E-Book</a>
    						</li>
-   						<li>
-							<a href="/contents/whitepapers"><i class="fa fa-circle-o"></i>Whitepapers</a>
+   						<li <%=curUri.indexOf("contents/whitepaper") > 0
+  									?"class=\"active\"":"" %>>
+							<a href="/contents/whitepaper"><i class="fa fa-circle-o"></i>Whitepapers</a>
    						</li>
 					</ul>
 				</li>

@@ -1,25 +1,17 @@
 package com.fronteo.cms.controller;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,21 +24,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fronteo.cms.common.Const;
 import com.fronteo.cms.common.Util;
-import com.fronteo.cms.service.BoardService;
+import com.fronteo.cms.service.ContentsService;
 
 @Controller
-public class BoardController {
+public class ContentsController {
 	@Inject
-	private BoardService service;
+	private ContentsService service;
 	
-	@RequestMapping(value = "board/press", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView press(@RequestParam Map<String,Object> params
+	@RequestMapping(value = "contents/brochure", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView brochure(@RequestParam Map<String,Object> params
 			,Model model
 			,HttpServletRequest req
             ,HttpServletResponse res) {
 		try {
-			params.put("bbsType", "P");
-			Map<String, Object> totalmap = service.getTotalBbsCount(params);
+			params.put("contentType", "C");
+			Map<String, Object> totalmap = service.getTotalContentsCount(params);
 			long totalCount = Long.parseLong(totalmap.get("cnt").toString());
 			model.addAttribute("rowCount", Const.DEFAULT_RESULT_COUNT);
 			model.addAttribute("totalCnt", totalCount);
@@ -57,23 +49,23 @@ public class BoardController {
 			
 			
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("board/press");
+		modelAndView.setViewName("contents/brochure");
 		
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "board/pressList", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView pressList(@RequestParam Map<String,Object> params, 
+	@RequestMapping(value = "contents/brochureList", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView brochureList(@RequestParam Map<String,Object> params, 
 			Model model
 			,HttpServletRequest req
             ,HttpServletResponse res) {
 		try {
-			params.put("bbsType", "P");
+			params.put("contentType", "C");
 			int rowCount = Integer.parseInt(params.get("rowCount").toString());
 			int startIdx = 0;
 			int page = Integer.parseInt(Util.checkNull(params.get("page"), "1"));
 			
-			Map<String, Object> map = service.getBbsCount(params);
+			Map<String, Object> map = service.getContentsCount(params);
 			
 			long totalCount = Long.parseLong(map.get("cnt").toString());
 			int totalPage = (int) Math.ceil((double) totalCount / rowCount);
@@ -83,26 +75,11 @@ public class BoardController {
 			params.put("startIdx", startIdx);
 			params.put("rowCount", rowCount);
 			
-			List<Map<String, Object>> list = service.getBbsList(params);
+			List<Map<String, Object>> list = service.getContentsList(params);
 			
 			for (Map<String,Object> rmap:list) {
-				if ("1".equals(rmap.get("subType"))) 
-				{
-					rmap.put("subTypeName", "eDiscovery");
-				} 
-				else if ("2".equals(rmap.get("subType"))) 
-				{
-					rmap.put("subTypeName", "Business Solution");
-				}
-				else if ("3".equals(rmap.get("subType"))) 
-				{
-					rmap.put("subTypeName", "AI Consulting");
-				}
-				else if ("4".equals(rmap.get("subType"))) 
-				{
-					rmap.put("subTypeName", "Corporate");
-				}
-
+				String filename = rmap.get("filePath").toString().substring(rmap.get("filePath").toString().lastIndexOf("/")+1);
+				rmap.put("filename", filename);
 			}
 			
 			model.addAttribute("data", list);
@@ -118,14 +95,14 @@ public class BoardController {
 		}
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("board/pressList");
+		modelAndView.setViewName("contents/brochureList");
 		
 		return modelAndView;
 	}
 	
 	
-	@RequestMapping(value = "board/pressAdd", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView pressAdd(@RequestParam Map<String,Object> params
+	@RequestMapping(value = "contents/brochureAdd", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView brochureAdd(@RequestParam Map<String,Object> params
 			,Model model
 			,HttpServletRequest req
             ,HttpServletResponse res) {
@@ -133,9 +110,9 @@ public class BoardController {
 			Map<String, Object> map = new HashMap<String, Object>();
 
 			if (null == params.get("type") || "".equals(params.get("type"))) {
-				map = service.getMaxBbsSeq(params);
+				map = service.getMaxContentsSeq(params);
 			} else if ("edit".equals(params.get("type"))) {
-				map = service.getBbsDetail(params);
+				map = service.getContentsDetail(params);
 			}
 			
 			map.put("type", params.get("type"));
@@ -146,19 +123,19 @@ public class BoardController {
 			
 			
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("board/pressAdd");
+		modelAndView.setViewName("contents/brochureAdd");
 		
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "board/event", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView event(@RequestParam Map<String,Object> params
+	@RequestMapping(value = "contents/briefs", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView briefs(@RequestParam Map<String,Object> params
 			,Model model
 			,HttpServletRequest req
             ,HttpServletResponse res) {
 		try {
-			params.put("bbsType", "E");
-			Map<String, Object> totalmap = service.getTotalBbsCount(params);
+			params.put("contentType", "P");
+			Map<String, Object> totalmap = service.getTotalContentsCount(params);
 			long totalCount = Long.parseLong(totalmap.get("cnt").toString());
 			model.addAttribute("rowCount", Const.DEFAULT_RESULT_COUNT);
 			model.addAttribute("totalCnt", totalCount);
@@ -169,23 +146,23 @@ public class BoardController {
 			
 			
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("board/event");
+		modelAndView.setViewName("contents/briefs");
 		
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "board/eventList", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView eventList(@RequestParam Map<String,Object> params, 
+	@RequestMapping(value = "contents/briefsList", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView briefsList(@RequestParam Map<String,Object> params, 
 			Model model
 			,HttpServletRequest req
             ,HttpServletResponse res) {
 		try {
-			params.put("bbsType", "E");
+			params.put("contentType", "P");
 			int rowCount = Integer.parseInt(params.get("rowCount").toString());
 			int startIdx = 0;
 			int page = Integer.parseInt(Util.checkNull(params.get("page"), "1"));
 			
-			Map<String, Object> map = service.getBbsCount(params);
+			Map<String, Object> map = service.getContentsCount(params);
 			
 			long totalCount = Long.parseLong(map.get("cnt").toString());
 			int totalPage = (int) Math.ceil((double) totalCount / rowCount);
@@ -195,21 +172,11 @@ public class BoardController {
 			params.put("startIdx", startIdx);
 			params.put("rowCount", rowCount);
 			
-			List<Map<String, Object>> list = service.getBbsList(params);
+			List<Map<String, Object>> list = service.getContentsList(params);
 			
 			for (Map<String,Object> rmap:list) {
-				if ("1".equals(rmap.get("subType"))) 
-				{
-					rmap.put("subTypeName", "Seminar");
-				} 
-				else if ("2".equals(rmap.get("subType"))) 
-				{
-					rmap.put("subTypeName", "Event");
-				}
-				else if ("3".equals(rmap.get("subType"))) 
-				{
-					rmap.put("subTypeName", "Others");
-				}
+				String filename = rmap.get("filePath").toString().substring(rmap.get("filePath").toString().lastIndexOf("/")+1);
+				rmap.put("filename", filename);
 			}
 			
 			model.addAttribute("data", list);
@@ -225,14 +192,14 @@ public class BoardController {
 		}
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("board/eventList");
+		modelAndView.setViewName("contents/briefsList");
 		
 		return modelAndView;
 	}
 	
 	
-	@RequestMapping(value = "board/eventAdd", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView eventAdd(@RequestParam Map<String,Object> params
+	@RequestMapping(value = "contents/briefsAdd", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView briefsAdd(@RequestParam Map<String,Object> params
 			,Model model
 			,HttpServletRequest req
             ,HttpServletResponse res) {
@@ -240,9 +207,9 @@ public class BoardController {
 			Map<String, Object> map = new HashMap<String, Object>();
 
 			if (null == params.get("type") || "".equals(params.get("type"))) {
-				map = service.getMaxBbsSeq(params);
+				map = service.getMaxContentsSeq(params);
 			} else if ("edit".equals(params.get("type"))) {
-				map = service.getBbsDetail(params);
+				map = service.getContentsDetail(params);
 			}
 			
 			map.put("type", params.get("type"));
@@ -253,19 +220,19 @@ public class BoardController {
 			
 			
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("board/eventAdd");
+		modelAndView.setViewName("contents/briefsAdd");
 		
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "board/career", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView career(@RequestParam Map<String,Object> params
+	@RequestMapping(value = "contents/video", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView video(@RequestParam Map<String,Object> params
 			,Model model
 			,HttpServletRequest req
             ,HttpServletResponse res) {
 		try {
-			params.put("bbsType", "C");
-			Map<String, Object> totalmap = service.getTotalBbsCount(params);
+			params.put("contentType", "V");
+			Map<String, Object> totalmap = service.getTotalContentsCount(params);
 			long totalCount = Long.parseLong(totalmap.get("cnt").toString());
 			model.addAttribute("rowCount", Const.DEFAULT_RESULT_COUNT);
 			model.addAttribute("totalCnt", totalCount);
@@ -276,23 +243,23 @@ public class BoardController {
 			
 			
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("board/career");
+		modelAndView.setViewName("contents/video");
 		
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "board/careerList", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView careerList(@RequestParam Map<String,Object> params, 
+	@RequestMapping(value = "contents/videoList", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView videoList(@RequestParam Map<String,Object> params, 
 			Model model
 			,HttpServletRequest req
             ,HttpServletResponse res) {
 		try {
-			params.put("bbsType", "C");
+			params.put("contentType", "V");
 			int rowCount = Integer.parseInt(params.get("rowCount").toString());
 			int startIdx = 0;
 			int page = Integer.parseInt(Util.checkNull(params.get("page"), "1"));
 			
-			Map<String, Object> map = service.getBbsCount(params);
+			Map<String, Object> map = service.getContentsCount(params);
 			
 			long totalCount = Long.parseLong(map.get("cnt").toString());
 			int totalPage = (int) Math.ceil((double) totalCount / rowCount);
@@ -302,16 +269,106 @@ public class BoardController {
 			params.put("startIdx", startIdx);
 			params.put("rowCount", rowCount);
 			
-			List<Map<String, Object>> list = service.getBbsList(params);
+			List<Map<String, Object>> list = service.getContentsList(params);
+			
+			model.addAttribute("data", list);
+			model.addAttribute("totalCnt", totalCount);
+			model.addAttribute("page", page);
+			model.addAttribute("totalPage", totalPage);
+			model.addAttribute("regFromDate", params.get("regFromDate"));
+			model.addAttribute("regToDate", params.get("regToDate"));
+			model.addAttribute("rowCount", params.get("rowCount").toString());
+		} catch (Exception ex) {
+			params.put("STATUS", "FAIL");
+			ex.printStackTrace();
+		}
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("contents/videoList");
+		
+		return modelAndView;
+	}
+	
+	
+	@RequestMapping(value = "contents/videoAdd", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView videoAdd(@RequestParam Map<String,Object> params
+			,Model model
+			,HttpServletRequest req
+            ,HttpServletResponse res) {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			if (null == params.get("type") || "".equals(params.get("type"))) {
+				map = service.getMaxContentsSeq(params);
+			} else if ("edit".equals(params.get("type"))) {
+				map = service.getContentsDetail(params);
+			}
+			
+			map.put("type", params.get("type"));
+			model.addAttribute("data", map);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+			
+			
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("contents/videoAdd");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "contents/ebook", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView ebook(@RequestParam Map<String,Object> params
+			,Model model
+			,HttpServletRequest req
+            ,HttpServletResponse res) {
+		try {
+			params.put("contentType", "E");
+			Map<String, Object> totalmap = service.getTotalContentsCount(params);
+			long totalCount = Long.parseLong(totalmap.get("cnt").toString());
+			model.addAttribute("rowCount", Const.DEFAULT_RESULT_COUNT);
+			model.addAttribute("totalCnt", totalCount);
+			model.addAttribute("rows", Const.ARR_RESULT_COUNT);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+			
+			
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("contents/ebook");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "contents/ebookList", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView ebookList(@RequestParam Map<String,Object> params, 
+			Model model
+			,HttpServletRequest req
+            ,HttpServletResponse res) {
+		try {
+			params.put("contentType", "E");
+			int rowCount = Integer.parseInt(params.get("rowCount").toString());
+			int startIdx = 0;
+			int page = Integer.parseInt(Util.checkNull(params.get("page"), "1"));
+			
+			Map<String, Object> map = service.getContentsCount(params);
+			
+			long totalCount = Long.parseLong(map.get("cnt").toString());
+			int totalPage = (int) Math.ceil((double) totalCount / rowCount);
+			startIdx = (page - 1) * rowCount;
+			
+			params.put("reqType", "view");
+			params.put("startIdx", startIdx);
+			params.put("rowCount", rowCount);
+			
+			List<Map<String, Object>> list = service.getContentsList(params);
 			
 			for (Map<String,Object> rmap:list) {
-				if ("1".equals(rmap.get("subType"))) 
-				{
-					rmap.put("subTypeName", "신입");
-				} 
-				else if ("2".equals(rmap.get("subType"))) 
-				{
-					rmap.put("subTypeName", "경력");
+				if (null == rmap.get("filePath") || "".equals(rmap.get("filePath"))) {
+					rmap.put("filename", "");
+				} else {
+					String filename = rmap.get("filePath").toString().substring(rmap.get("filePath").toString().lastIndexOf("/")+1);
+					rmap.put("filename", filename);
 				}
 			}
 			
@@ -328,14 +385,14 @@ public class BoardController {
 		}
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("board/careerList");
+		modelAndView.setViewName("contents/ebookList");
 		
 		return modelAndView;
 	}
 	
 	
-	@RequestMapping(value = "board/careerAdd", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView careerAdd(@RequestParam Map<String,Object> params
+	@RequestMapping(value = "contents/ebookAdd", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView ebookAdd(@RequestParam Map<String,Object> params
 			,Model model
 			,HttpServletRequest req
             ,HttpServletResponse res) {
@@ -343,9 +400,9 @@ public class BoardController {
 			Map<String, Object> map = new HashMap<String, Object>();
 
 			if (null == params.get("type") || "".equals(params.get("type"))) {
-				map = service.getMaxBbsSeq(params);
+				map = service.getMaxContentsSeq(params);
 			} else if ("edit".equals(params.get("type"))) {
-				map = service.getBbsDetail(params);
+				map = service.getContentsDetail(params);
 			}
 			
 			map.put("type", params.get("type"));
@@ -356,19 +413,19 @@ public class BoardController {
 			
 			
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("board/careerAdd");
+		modelAndView.setViewName("contents/ebookAdd");
 		
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "board/faq", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView faq(@RequestParam Map<String,Object> params
+	@RequestMapping(value = "contents/whitepaper", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView whitepaper(@RequestParam Map<String,Object> params
 			,Model model
 			,HttpServletRequest req
             ,HttpServletResponse res) {
 		try {
-			params.put("bbsType", "F");
-			Map<String, Object> totalmap = service.getTotalBbsCount(params);
+			params.put("contentType", "W");
+			Map<String, Object> totalmap = service.getTotalContentsCount(params);
 			long totalCount = Long.parseLong(totalmap.get("cnt").toString());
 			model.addAttribute("rowCount", Const.DEFAULT_RESULT_COUNT);
 			model.addAttribute("totalCnt", totalCount);
@@ -379,23 +436,23 @@ public class BoardController {
 			
 			
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("board/faq");
+		modelAndView.setViewName("contents/whitepaper");
 		
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "board/faqList", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView faqList(@RequestParam Map<String,Object> params, 
+	@RequestMapping(value = "contents/whitepaperList", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView whitepaperList(@RequestParam Map<String,Object> params, 
 			Model model
 			,HttpServletRequest req
             ,HttpServletResponse res) {
 		try {
-			params.put("bbsType", "F");
+			params.put("contentType", "W");
 			int rowCount = Integer.parseInt(params.get("rowCount").toString());
 			int startIdx = 0;
 			int page = Integer.parseInt(Util.checkNull(params.get("page"), "1"));
 			
-			Map<String, Object> map = service.getBbsCount(params);
+			Map<String, Object> map = service.getContentsCount(params);
 			
 			long totalCount = Long.parseLong(map.get("cnt").toString());
 			int totalPage = (int) Math.ceil((double) totalCount / rowCount);
@@ -405,7 +462,16 @@ public class BoardController {
 			params.put("startIdx", startIdx);
 			params.put("rowCount", rowCount);
 			
-			List<Map<String, Object>> list = service.getBbsList(params);
+			List<Map<String, Object>> list = service.getContentsList(params);
+			
+			for (Map<String,Object> rmap:list) {
+				if (null == rmap.get("filePath") || "".equals(rmap.get("filePath"))) {
+					rmap.put("filename", "");
+				} else {
+					String filename = rmap.get("filePath").toString().substring(rmap.get("filePath").toString().lastIndexOf("/")+1);
+					rmap.put("filename", filename);
+				}
+			}
 			
 			model.addAttribute("data", list);
 			model.addAttribute("totalCnt", totalCount);
@@ -420,14 +486,14 @@ public class BoardController {
 		}
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("board/faqList");
+		modelAndView.setViewName("contents/whitepaperList");
 		
 		return modelAndView;
 	}
 	
 	
-	@RequestMapping(value = "board/faqAdd", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView faqAdd(@RequestParam Map<String,Object> params
+	@RequestMapping(value = "contents/whitepaperAdd", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView whitepaperAdd(@RequestParam Map<String,Object> params
 			,Model model
 			,HttpServletRequest req
             ,HttpServletResponse res) {
@@ -435,9 +501,9 @@ public class BoardController {
 			Map<String, Object> map = new HashMap<String, Object>();
 
 			if (null == params.get("type") || "".equals(params.get("type"))) {
-				map = service.getMaxBbsSeq(params);
+				map = service.getMaxContentsSeq(params);
 			} else if ("edit".equals(params.get("type"))) {
-				map = service.getBbsDetail(params);
+				map = service.getContentsDetail(params);
 			}
 			
 			map.put("type", params.get("type"));
@@ -448,37 +514,26 @@ public class BoardController {
 			
 			
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("board/faqAdd");
+		modelAndView.setViewName("contents/whitepaperAdd");
 		
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "board/bbsInsert", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value = "contents/contentsInsert", method = {RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
-	public String bbsInsert(@RequestParam Map<String,Object> params
+	public String contentsInsert(@RequestParam Map<String,Object> params
 			,HttpServletRequest req
             ,HttpServletResponse res) {
 		String msg = "";
 		try {
-//			if (null != params.get("filePath")) {
-//				String filepath = ContentFileUpload(req, res);
-//				params.put("filePath", filepath);
-//			}
-			
-			
-			// 파일이 첨부되지 않았거나, 파일 변경이 없을때
-			if ("P".equals(params.get("bbsType")) || "E".equals(params.get("bbsType"))) { 
-				if ("".equals(params.get("file_route")) || params.get("file_route").toString().contains(Const.BBS_SERVER_PATH)) {
-					params.put("filePath", params.get("file_route"));
-				} else {
-					String filepath = ContentFileUpload(req, res);
-					params.put("filePath", filepath);	
-				}
-			}
-			
-			if ("C".equals(params.get("bbsType"))) {
-				if (null == params.get("isAnytime") || "".equals(params.get("isAnytime"))) {
-					params.put("isAnytime", "N");
+			if (null != params.get("contentType") && !"V".equals(params.get("contentType"))) {
+				String filepath = ContentFileUpload(req, res);
+				params.put("filePath", filepath);
+			} else {
+				String filepath = ContentFileUpload(req, res);
+				if ("".equals(filepath)) {
+					msg = "fail";
+					return msg;
 				}
 			}
 			
@@ -487,11 +542,11 @@ public class BoardController {
 			
 			if (null != params.get("updateType") && "edit".equals(params.get("updateType"))) 
 			{
-				result = service.updateBbs(params);
+				result = service.updateContents(params);
 			}
 			else 
 			{
-				result = service.insertBbs(params);
+				result = service.insertContents(params);
 			}
 			
 			if (result > 0) {
@@ -507,16 +562,16 @@ public class BoardController {
 	}
 	
 	
-	@RequestMapping(value = "json/deleteBbs", method = RequestMethod.POST)
+	@RequestMapping(value = "json/deleteContents", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> deleteBbs(@RequestParam Map<String, Object> params,
+	public Map<String, Object> deleteContents(@RequestParam Map<String, Object> params,
 			Model model,
 			HttpServletRequest req, 
 			HttpServletResponse res) {
 		try {
 			String[] targets = params.get("code").toString().split(",");
 			params.put("code", targets);
-			int cnt = service.deleteBbs(params);
+			int cnt = service.deleteContents(params);
 			
 			params.put("STATUS", (cnt > 0) ? "SUCCESS" : "FAIL");
 			params.put("SavedCount", cnt);
@@ -537,9 +592,8 @@ public class BoardController {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		
 		try { 
-			String path = Const.BBS_FILE_UPLOAD_PATH;
+			String path = Const.CONTENTS_FILE_UPLOAD_PATH;
 			
-			System.out.println("_____________" + path);
 			String filename = "";
 			
 			MultipartHttpServletRequest mhsr = (MultipartHttpServletRequest) req; 
@@ -579,7 +633,7 @@ public class BoardController {
 			}
 			
 			if (!"".equals(filename)) {
-				filepath = Const.BBS_SERVER_PATH+filename;
+				filepath = Const.CONTENTS_SERVER_PATH+filename;
 			}
 			
 			
@@ -589,4 +643,6 @@ public class BoardController {
 		
 		return filepath;
 	}
+	
+	
 }

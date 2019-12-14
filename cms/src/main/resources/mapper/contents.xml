@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="contents">
+
+	<select id="getTotalContentsCount" resultType="hashmap">
+		SELECT count(*) as cnt FROM TB_CONTENTS
+		WHERE 1=1 AND contentType = #{contentType}
+	</select>
+	
+	<select id="getContentsList" resultType="hashmap">
+		SELECT 
+			contentSeq, contentType, title, exposure, contents, url, filePath,
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate
+		FROM TB_CONTENTS
+		WHERE 1=1
+			AND contentType = #{contentType}
+		<if test='regFromDate != null and regToDate != null and !regFromDate.equals("") and !regToDate.equals("")'>
+			AND DATE(regdate) BETWEEN #{regFromDate} AND #{regToDate}
+		</if>	
+		<if test='keyword != null and !keyword.equals("")'>
+			AND title like concat('%',  #{keyword}, '%')  
+		</if>	
+		ORDER BY regdate DESC
+		LIMIT #{startIdx}, #{rowCount}
+	</select>
+	
+	<select id="getContentsCount" resultType="hashmap">
+		SELECT count(contentSeq) cnt
+		FROM TB_CONTENTS
+		WHERE 1=1
+			AND contentType = #{contentType}
+		<if test='regFromDate != null and regToDate != null and !regFromDate.equals("") and !regToDate.equals("")'>
+			AND DATE(regdate) BETWEEN #{regFromDate} AND #{regToDate}
+		</if>
+		<if test='keyword != null and !keyword.equals("")'>
+			AND title like concat('%',  #{keyword}, '%')  
+		</if>
+		
+	</select>
+	
+	<select id="getContentsDetail" resultType="hashmap">
+		SELECT
+			contentSeq, contentType, title, exposure, contents, url, filePath,
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate
+		FROM TB_CONTENTS
+		WHERE contentSeq = #{contentSeq}
+			AND contentType	= #{contentType}
+	</select> 
+	
+	<select id="getMaxContentsSeq" resultType="hashmap">
+		SELECT IFNULL(MAX(contentSeq+1), 1) as contentSeq, CURDATE() as regdate FROM TB_CONTENTS
+	</select>
+	
+	<insert id="insertContents" parameterType="hashmap">
+		INSERT INTO
+		TB_CONTENTS
+			(contentType, title, exposure, contents, url, filePath, regdate)
+		VALUES
+			(#{contentType}, #{title}, #{exposure}, #{contents}, #{url}, #{filePath}, now())
+	</insert>
+	
+	<update id="updateContents" parameterType="hashmap">
+		UPDATE TB_CONTENTS
+		SET
+			title = #{title},
+			exposure = #{exposure},
+			contents = #{contents},
+			url = #{url},
+			filePath = #{filePath},
+			moddate = now()
+		WHERE 
+			contentSeq = ${contentSeq}
+	</update>
+	
+	<delete id="deleteContents" parameterType="hashmap">
+		DELETE FROM TB_CONTENTS
+		WHERE
+			contentSeq IN 
+			<foreach collection="code" item="item" open="(" separator="," close=")" >
+				#{item}
+			</foreach>
+	</delete>
+</mapper>

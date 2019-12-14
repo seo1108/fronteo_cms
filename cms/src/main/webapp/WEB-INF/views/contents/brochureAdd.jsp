@@ -17,7 +17,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Event</title>
+    <title>Company Brochure</title>
     
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -57,10 +57,10 @@
           <h1>
           	<c:choose>
                 <c:when test="${not empty data.type && data.type eq 'edit'}">
-                	Event 편집
+                	Company Brochure 편집
                 </c:when>
                 <c:otherwise>
-                	Event 등록
+                	Company Brochure 등록
                 </c:otherwise>
             </c:choose>    
 						                 
@@ -76,7 +76,7 @@
 		        <div class="col-xs-12 box box-danger">
 		        	<form name="frm" id="frm" method="post" enctype="multipart/form-data" action="">
 		        		<input type="hidden" name="updateType" id="updateType" value="${data.type }" />
-		        		<input type="hidden" name="bbsType" id="bbsType" value="E" />
+		        		<input type="hidden" name="contentType" id="contentType" value="C" />
 						<div class="card-body">
 							<table class="table table-striped">
 						        <colgroup>
@@ -87,7 +87,7 @@
 						       	<tr>
 					                 <th class="quiztable-content-center-white">NO.</th>
 						             <td>
-						             	<input type="text" name="bbsSeq" id="bbsSeq" value="${data.bbsSeq}" class="form-control" style="display:inline;" readOnly/>
+						             	<input type="text" name="contentSeq" id="contentSeq" value="${data.contentSeq}" class="form-control" style="display:inline;" readOnly/>
 						             </td>
 					              </tr>		
 					              <tr>
@@ -97,31 +97,22 @@
 						             </td>
 					              </tr>		
 					              <tr>
-					                 <th class="quiztable-content-center-white">구분</th>
-					                 <c:choose>
-						                 <c:when test="${not empty data.type && data.type eq 'edit'}">
-						                 	<td>
-								             	<input type="radio" name="subType" value="1" style="margin-right: 10px;" 
-								             		<c:if test="${data.subType eq '1'}">checked</c:if>><span>Seminar</span>
-								                <input type="radio" name="subType" value="2" style="margin-right: 10px; margin-left: 50px;" 
-								                	<c:if test="${data.subType eq '2'}">checked</c:if>><span>Event</span>
-								                <input type="radio" name="subType" value="3" style="margin-right: 10px; margin-left: 50px;" 
-								                	<c:if test="${data.subType eq '3'}">checked</c:if>><span>Others</span>
-								            </td>
-						                 </c:when>
-						                 <c:otherwise>
-						                 	<td>
-								             	<input type="radio" name="subType" value="1" style="margin-right: 10px;" checked/><span>Seminar</span>
-								                <input type="radio" name="subType" value="2" style="margin-right: 10px; margin-left: 50px;" /><span>Event</span>
-								                <input type="radio" name="subType" value="3" style="margin-right: 10px; margin-left: 50px;" /><span>Others</span>
-								            </td>   
-						                 </c:otherwise>
-					                 </c:choose>
-					              </tr>			
-						          <tr>
 					                 <th class="quiztable-content-center-white">제목</th>
 						             <td>
 						             	<input type="text" name="title" id="title" value="${data.title}" class="form-control" style="display:inline;"/>
+						             </td>
+					              </tr>	
+					              <tr>
+					                 <th class="quiztable-content-center-white">파일첨부</th>
+						             <td>
+						             	<div class="file_input">
+						             	    <label>
+										        파일 찾기
+										        <input type="file" name="filePath" id="filePath" onchange="javascript:document.getElementById('file_route').value=this.value">
+										    </label>
+										    <input type="text" style="margin-bottom:5px;" readonly="readonly" title="File Route" id="file_route" name="file_route" class="form-control" value="${data.filePath}">
+										    <button class="btn btn-danger btn-sm" style="margin-bottom:5px;" onclick="event.preventDefault();$('#file_route').val('');">파일삭제 </button>
+										</div>
 						             </td>
 					              </tr>		
 						          <tr>
@@ -142,32 +133,7 @@
 								            </td>   
 						                 </c:otherwise>
 					                 </c:choose>
-					              </tr>		
-						          <tr>
-					                 <th class="quiztable-content-center-white">내용</th>
-						             <td><textarea name="contents" id="contents" rows="22" cols="170">${data.contents}</textarea></td>
-					              </tr>		
-					              <tr>
-					                 <th class="quiztable-content-center-white">URL</th>
-						             <td>
-						             	<input type="text" name="url" id="url" value="${data.url}" class="form-control" style="display:inline;"/>
-						             </td>
-					              </tr>	
-					              <tr>
-					                 <th class="quiztable-content-center-white">파일첨부</th>
-						             <td>
-<!--  						             	<input id="attach" type="file" name="filePath" id="filPath" style="width:100%;">
-						             	<input type="file" name="filePath" id="filePath" style="width:330px;" value="${data.filePath}"> -->
-						             	<div class="file_input">
-						             	    <label>
-										        파일 찾기
-										        <input type="file" name="filePath" id="filePath" onchange="javascript:document.getElementById('file_route').value=this.value">
-										    </label>
-										    <input type="text" style="margin-bottom:5px;" readonly="readonly" title="File Route" id="file_route" name="file_route" class="form-control" value="${data.filePath}">
-										    <button class="btn btn-danger btn-sm" style="margin-bottom:5px;" onclick="event.preventDefault();$('#file_route').val('');">파일삭제 </button>
-										</div>
-						             </td>
-					              </tr>		
+					              </tr>
 							   </tbody>
 				           </table>
 						</div>
@@ -175,9 +141,9 @@
 					
 					<div style="float:right;padiing-top:100px;padding-top:10px;padding-bottom:10px;">
 						<c:if test="${not empty data.type && data.type eq 'edit'}">
-							<button class="btn btn-danger" style="margin-right:10px;" onclick="deleteBbs('${data.bbsSeq}');">삭제</button>
+							<button class="btn btn-danger" style="margin-right:10px;" onclick="deleteContents('${data.contentSeq}');">삭제</button>
 						</c:if>	
-			        	<button class="btn btn-warning" onclick="bbsInsert();">저장 </button>
+			        	<button class="btn btn-warning" onclick="contentsInsert();">저장 </button>
 			        </div>
 			        
 		        </div>
@@ -214,48 +180,20 @@
 	
 	<script type="text/javascript">
 	
-	var oEditors = [];
-	var skinUrl = "../resources/smarteditor/SmartEditor2Skin.html";
-	
-	nhn.husky.EZCreator.createInIFrame({
-	    oAppRef: oEditors,
-	    elPlaceHolder: "contents",
-	    sSkinURI: skinUrl,
-	    fCreator: "createSEditor2"
-	
-	});
-	
-	/* jQuery(document).ready(function(){
-		var oEditors = [];
-		var skinUrl = "../resources/smarteditor/SmartEditor2Skin.html";
-		
-		nhn.husky.EZCreator.createInIFrame({
-		    oAppRef: oEditors,
-		    elPlaceHolder: "content",
-		    sSkinURI: skinUrl,
-		    fCreator: "createSEditor2"
-		
-		});
-    }); */
-	
-	function bbsInsert() {
-    	// id가 smarteditor인 textarea에 에디터에서 대입
-		oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []); 
-		
-		if($.trim($("#title").val()) ==''){
+	function contentsInsert() {
+    	if($.trim($("#title").val()) ==''){
 			swal("제목을 입력해 주세요.", "", "info");
 			return false;
 		}
 		
-		//내용체크
-		if($.trim($("#contents").val()) ==''){
-			swal("내용을 입력해 주세요.", "", "info");
+		if($.trim($("#file_route").val()) ==''){
+			swal("파일을 선택해 주세요.", "", "info");
 			return false;
 		}
 		
 	 	event.preventDefault();
 		
-		 var form = $('#frm')[0];
+		var form = $('#frm')[0];
 	        
 			// Create an FormData object 
 	     var params = new FormData(form);
@@ -264,7 +202,7 @@
 		//var params = $("#frm").serialize();
 		
 		$.ajax({
-			url: "/board/bbsInsert",
+			url: "/contents/contentsInsert",
 			type: "post",
 			enctype: 'multipart/form-data',
 			data: params,
@@ -292,7 +230,7 @@
 		
 	}
     
-    function deleteBbs(bbsSeq) {
+    function deleteContents(contentSeq) {
     	swal("정말 삭제하시겠습니까?", {
 			buttons: {
 				cancel: "취소",
@@ -303,9 +241,9 @@
 		  switch (value) {
 		    case "defeat":
 		    	var codes = [];
-		    	codes.push(bbsSeq);
+		    	codes.push(contentSeq);
 				
-				$.post('/json/deleteBbs', { code: codes.join() }, function(data) {
+				$.post('/json/deleteContents', { code: codes.join() }, function(data) {
 					if (data.STATUS == 'SUCCESS') {
 						swal('삭제되었습니다.',"", "success")
 						.then(function(value)  { 

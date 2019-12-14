@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="page">
+
+	<select id="getTotalBannerCount" resultType="hashmap">
+		SELECT count(*) as cnt FROM TB_BANNER
+	</select>
+	
+	<select id="getBannerList" resultType="hashmap">
+		SELECT 
+			bannerSeq, title, exposure, url, filePath,
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate
+		FROM TB_BANNER
+		WHERE 1=1
+		<if test='regFromDate != null and regToDate != null and !regFromDate.equals("") and !regToDate.equals("")'>
+			AND DATE(regdate) BETWEEN #{regFromDate} AND #{regToDate}
+		</if>	
+		<if test='keyword != null and !keyword.equals("")'>
+			AND title like concat('%',  #{keyword}, '%')  
+		</if>	
+		ORDER BY exposure DESC, regdate DESC
+		LIMIT #{startIdx}, #{rowCount}
+	</select>
+	
+	<select id="getBannerCount" resultType="hashmap">
+		SELECT count(bannerSeq) cnt
+		FROM TB_BANNER
+		WHERE 1=1
+		<if test='regFromDate != null and regToDate != null and !regFromDate.equals("") and !regToDate.equals("")'>
+			AND DATE(regdate) BETWEEN #{regFromDate} AND #{regToDate}
+		</if>
+		<if test='keyword != null and !keyword.equals("")'>
+			AND title like concat('%',  #{keyword}, '%')  
+		</if>
+		
+	</select>
+	
+	<select id="getBannerDetail" resultType="hashmap">
+		SELECT
+			bannerSeq, title, exposure, url, filePath,
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate
+		FROM TB_BANNER
+		WHERE bannerSeq = #{bannerSeq}
+	</select> 
+	
+	<insert id="insertBanner" parameterType="hashmap">
+		INSERT INTO
+		TB_BANNER
+			(title, exposure, url, filePath, regdate)
+		VALUES
+			(#{title}, #{exposure}, #{url}, #{filePath}, now())
+	</insert>
+	
+	<update id="updateBannerExposureNtoAll" parameterType="hashmap">
+		UPDATE TB_BANNER
+		SET
+			exposure = 'N'
+	</update>
+
+	<update id="updateBannerExposureY" parameterType="hashmap">
+		UPDATE TB_BANNER
+		SET
+			exposure = 'Y'
+		WHERE 
+			bannerSeq = #{bannerSeq}
+	</update>
+	
+	<delete id="deleteBanner" parameterType="hashmap">
+		DELETE FROM TB_BANNER
+		WHERE
+			bannerSeq IN 
+			<foreach collection="code" item="item" open="(" separator="," close=")" >
+				#{item}
+			</foreach>
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 
+	
+			eDiscovery 관련 쿼리 
+	
+	-->
+	 
+	
+	
+	
+	
+</mapper>
