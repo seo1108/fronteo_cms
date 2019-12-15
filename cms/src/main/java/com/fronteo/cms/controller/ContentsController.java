@@ -1,6 +1,9 @@
 package com.fronteo.cms.controller;
 
+
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,10 +11,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.ImageType;
+import org.apache.pdfbox.rendering.PDFRenderer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,6 +95,7 @@ public class ContentsController {
 			model.addAttribute("totalPage", totalPage);
 			model.addAttribute("regFromDate", params.get("regFromDate"));
 			model.addAttribute("regToDate", params.get("regToDate"));
+			model.addAttribute("keyword", params.get("keyword"));
 			model.addAttribute("rowCount", params.get("rowCount").toString());
 		} catch (Exception ex) {
 			params.put("STATUS", "FAIL");
@@ -185,6 +193,7 @@ public class ContentsController {
 			model.addAttribute("totalPage", totalPage);
 			model.addAttribute("regFromDate", params.get("regFromDate"));
 			model.addAttribute("regToDate", params.get("regToDate"));
+			model.addAttribute("keyword", params.get("keyword"));
 			model.addAttribute("rowCount", params.get("rowCount").toString());
 		} catch (Exception ex) {
 			params.put("STATUS", "FAIL");
@@ -277,6 +286,7 @@ public class ContentsController {
 			model.addAttribute("totalPage", totalPage);
 			model.addAttribute("regFromDate", params.get("regFromDate"));
 			model.addAttribute("regToDate", params.get("regToDate"));
+			model.addAttribute("keyword", params.get("keyword"));
 			model.addAttribute("rowCount", params.get("rowCount").toString());
 		} catch (Exception ex) {
 			params.put("STATUS", "FAIL");
@@ -378,6 +388,7 @@ public class ContentsController {
 			model.addAttribute("totalPage", totalPage);
 			model.addAttribute("regFromDate", params.get("regFromDate"));
 			model.addAttribute("regToDate", params.get("regToDate"));
+			model.addAttribute("keyword", params.get("keyword"));
 			model.addAttribute("rowCount", params.get("rowCount").toString());
 		} catch (Exception ex) {
 			params.put("STATUS", "FAIL");
@@ -479,6 +490,7 @@ public class ContentsController {
 			model.addAttribute("totalPage", totalPage);
 			model.addAttribute("regFromDate", params.get("regFromDate"));
 			model.addAttribute("regToDate", params.get("regToDate"));
+			model.addAttribute("keyword", params.get("keyword"));
 			model.addAttribute("rowCount", params.get("rowCount").toString());
 		} catch (Exception ex) {
 			params.put("STATUS", "FAIL");
@@ -528,13 +540,19 @@ public class ContentsController {
 		try {
 			if (null != params.get("contentType") && !"V".equals(params.get("contentType"))) {
 				String filepath = ContentFileUpload(req, res);
-				params.put("filePath", filepath);
-			} else {
-				String filepath = ContentFileUpload(req, res);
-				if ("".equals(filepath)) {
-					msg = "fail";
-					return msg;
+				
+				String[] s_file = filepath.split("#@#");
+				
+				params.put("filePath", s_file[0]);
+				if (s_file.length > 1) {
+					params.put("thumbUrl", Const.CONTENTS_SERVER_PATH+s_file[1]);
 				}
+			} else {
+//				String filepath = ContentFileUpload(req, res);
+//				if ("".equals(filepath)) {
+//					msg = "fail";
+//					return msg;
+//				}
 			}
 			
 			
@@ -601,6 +619,7 @@ public class ContentsController {
 			MultipartFile mfile = null; 
 			String fieldName = ""; 
 			String origName = ""; 
+			String thumb = "";
 			List resultList = new ArrayList(); 
 			
 			File dir = new File(path); 
@@ -610,6 +629,8 @@ public class ContentsController {
 			while (iter.hasNext()) { 
 				fieldName = (String) iter.next(); 
 				mfile = mhsr.getFile(fieldName); 
+				
+				
 				
 				origName = new String(mfile.getOriginalFilename().getBytes(), "UTF-8"); 
 				
@@ -621,19 +642,35 @@ public class ContentsController {
 			    }
 			    extension = origName.substring(lastIndexOf);
 			    
-				String saveFileName = origName.substring(0, origName.lastIndexOf(".")) + "_" + timestamp.getTime() + extension;
+			    String saveFileName = origName.substring(0, origName.lastIndexOf(".")) + "_" + timestamp.getTime() + extension;
 				filename = saveFileName;
-				
 				File serverFile = new File(path + File.separator + saveFileName); 
-				mfile.transferTo(serverFile); 
+				mfile.transferTo(serverFile);
+				
+				
+				
+				
 				Map file = new HashMap(); 
 				file.put("origName", origName); 
 				file.put("sfile", serverFile); 
-				resultList.add(file); 
+				resultList.add(file);
+				
+				System.out.println("_________________________________________________________" + saveFileName.substring(saveFileName.lastIndexOf(".")));
+				
+				if ("pdf".equals(saveFileName.substring(saveFileName.lastIndexOf(".")+1)) ||
+						"PDF".equals(saveFileName.substring(saveFileName.lastIndexOf(".")+1))) {
+					thumb = pdfbox_thumbnail(serverFile);
+			    }
+			    
 			}
 			
 			if (!"".equals(filename)) {
-				filepath = Const.CONTENTS_SERVER_PATH+filename;
+				if (!"".equals(thumb)) {
+					filepath = Const.CONTENTS_SERVER_PATH+filename + "#@#" + thumb;
+					System.out.println("_____________________" + filepath + "\n" + "__________________"  + thumb);
+				} else {
+					filepath = Const.CONTENTS_SERVER_PATH+filename;
+				}
 			}
 			
 			
@@ -644,5 +681,44 @@ public class ContentsController {
 		return filepath;
 	}
 	
+	public String pdfbox_thumbnail(File file) {
+		String thumbnailFile = "";
+		try {
+			PDDocument document = PDDocument.load( file );
+			PDFRenderer pdfRenderer = new PDFRenderer( document );
 	
+			System.out.println( "전체페이지 수 : " + document.getNumberOfPages() );
+			BufferedImage bim = pdfRenderer.renderImageWithDPI( 0, 100, ImageType.RGB );
+	
+			// suffix in filename will be used as the file format
+			//ImageIO.writeImage( bim, pdfFilename + ".png", 100 );
+			//File imageFile = new File(file.toString().substring(0, file.toString().lastIndexOf(".")) + ".png");
+			File imageFile = changeExtension(file, ".png");
+			ImageIO.write(bim, "png", imageFile);
+			
+			System.out.println("__________________________" + imageFile);
+			
+			document.close();
+			
+			thumbnailFile = imageFile.getName();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} 
+		
+		return thumbnailFile;
+	}
+	
+	public File changeExtension(File f, String newExtension) {
+		int i = f.getName().lastIndexOf('.');
+		String name = f.getName().substring(0,i);
+		return new File(f.getParent() + "/" + name + newExtension);
+	}
+	
+	public File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException { 
+		File convFile = new File( multipart.getOriginalFilename()); 
+		multipart.transferTo(convFile); 
+		System.out.println("__________________________" + convFile);
+		return convFile; 
+	}
+
 }

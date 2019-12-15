@@ -57,9 +57,9 @@
 	<insert id="insertContents" parameterType="hashmap">
 		INSERT INTO
 		TB_CONTENTS
-			(contentType, title, exposure, contents, url, filePath, regdate)
+			(contentType, title, exposure, contents, url, thumbUrl, filePath, regdate)
 		VALUES
-			(#{contentType}, #{title}, #{exposure}, #{contents}, #{url}, #{filePath}, now())
+			(#{contentType}, #{title}, #{exposure}, #{contents}, #{url}, #{thumbUrl}, #{filePath}, now())
 	</insert>
 	
 	<update id="updateContents" parameterType="hashmap">
@@ -69,6 +69,7 @@
 			exposure = #{exposure},
 			contents = #{contents},
 			url = #{url},
+			thumbUrl = #{thumbUrl},
 			filePath = #{filePath},
 			moddate = now()
 		WHERE 

@@ -81,6 +81,7 @@ public class PageController {
 			model.addAttribute("totalPage", totalPage);
 			model.addAttribute("regFromDate", params.get("regFromDate"));
 			model.addAttribute("regToDate", params.get("regToDate"));
+			model.addAttribute("keyword", params.get("keyword"));
 			model.addAttribute("rowCount", params.get("rowCount").toString());
 		} catch (Exception ex) {
 			params.put("STATUS", "FAIL");

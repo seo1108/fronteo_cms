@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="salesforce">
+
+	<select id="getTotalSalesforceCount" resultType="hashmap">
+		SELECT count(*) as cnt FROM TB_SALESFORCE
+		WHERE 1=1
+		<if test='pathType != null and !pathType.equals("")'>
+			AND pathType = #{pathType}
+		</if>	
+	</select>
+	
+	<select id="getSalesforceList" resultType="hashmap">
+		SELECT 
+			customerSeq, pathType, concern, inquiry, familyname, firstname, company,
+			phone, deptname, titlename, recvEmail,
+			DATE_FORMAT(regdate,'%Y-%m-%d') regdate
+		FROM TB_SALESFORCE
+		WHERE 1=1
+		<if test='regFromDate != null and regToDate != null and !regFromDate.equals("") and !regToDate.equals("")'>
+			AND DATE(regdate) BETWEEN #{regFromDate} AND #{regToDate}
+		</if>	
+		<if test='pathType != null and !pathType.equals("")'>
+			AND pathType = #{pathType}
+		</if>	
+		ORDER BY regdate DESC
+		LIMIT #{startIdx}, #{rowCount}
+	</select>
+	
+	<select id="getSalesforceCount" resultType="hashmap">
+		SELECT count(customerSeq) cnt
+		FROM TB_SALESFORCE
+		WHERE 1=1
+		<if test='regFromDate != null and regToDate != null and !regFromDate.equals("") and !regToDate.equals("")'>
+			AND DATE(regdate) BETWEEN #{regFromDate} AND #{regToDate}
+		</if>
+		<if test='pathType != null and !pathType.equals("")'>
+			AND pathType = #{pathType}
+		</if>
+	</select>
+	
+	<select id="getSalesforceDetail" resultType="hashmap">
+		SELECT
+			customerSeq, pathType, concern, inquiry, familyname, firstname, company,
+			phone, deptname, titlename, recvEmail,
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate
+		FROM TB_SALESFORCE
+		WHERE customerSeq = #{customerSeq}
+	</select> 
+</mapper>
