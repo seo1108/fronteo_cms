@@ -58,4 +58,88 @@ public class PageDao {
 		int cnt = sqlSession.update(namespace + ".deleteBanner", map);
 		return cnt;
 	}
+	
+	
+	
+	public Map<String, Object> getTotalEbookCount(Map<String, Object> map) throws Exception {
+		Map<String, Object> rmap = sqlSession.selectOne(namespace + ".getTotalEbookCount", map);
+		return rmap;
+	}
+	
+	public List<Map<String, Object>> getEbookList(Map<String, Object> map) throws Exception {
+		List<Map<String, Object>> list = sqlSession.selectList(namespace + ".getEbookList", map);
+		return list;
+	}
+	
+	public Map<String, Object> getEbookCount(Map<String, Object> map) throws Exception {
+		Map<String, Object> rmap = sqlSession.selectOne(namespace + ".getEbookCount", map);
+		return rmap;
+	}
+	
+	public Map<String, Object> getEbookDetail(Map<String, Object> map) throws Exception {
+		Map<String, Object> rmap = sqlSession.selectOne(namespace + ".getEbookDetail", map);
+		return rmap;
+	}
+	
+	public Map<String, Object> getMaxEbookSeq(Map<String, Object> map) throws Exception {
+		Map<String, Object> rmap = sqlSession.selectOne(namespace + ".getMaxEbookSeq", map);
+		return rmap;
+	}
+	
+	public int insertEbook(Map<String, Object> map) throws Exception {
+		int cnt = sqlSession.update(namespace + ".insertEbook", map);
+		return cnt;
+	}
+	
+	public int updateEbook(Map<String, Object> map) throws Exception {
+		int cnt = sqlSession.update(namespace + ".updateEbook", map);
+		return cnt;
+	}
+	
+	public int deleteEbook(Map<String, Object> map) throws Exception {
+		int cnt = sqlSession.update(namespace + ".deleteEbook", map);
+		return cnt;
+	}
+	
+	
+	
+	public List<Map<String, Object>> getEbookContentList(Map<String, Object> map) throws Exception {
+		List<Map<String, Object>> list = sqlSession.selectList(namespace + ".getEbookContentList", map);
+		return list;
+	}
+	
+	public Map<String, Object> getEbookContentDetail(Map<String, Object> map) throws Exception {
+		Map<String, Object> rmap = sqlSession.selectOne(namespace + ".getEbookContentDetail", map);
+		return rmap;
+	}
+	
+	public Map<String, Object> getMaxEbookContentOrder(Map<String, Object> map) throws Exception {
+		Map<String, Object> rmap = sqlSession.selectOne(namespace + ".getMaxEbookContentOrder", map);
+		return rmap;
+	}
+	
+	public int insertEbookContent(Map<String, Object> map) throws Exception {
+		int cnt = sqlSession.update(namespace + ".insertEbookContent", map);
+		return cnt;
+	}
+	
+	public int updateEbookContent(Map<String, Object> map) throws Exception {
+		int cnt = sqlSession.update(namespace + ".updateEbookContent", map);
+		return cnt;
+	}
+	
+	public int deleteEbookContent(Map<String, Object> map) throws Exception {
+		int cnt = sqlSession.update(namespace + ".deleteEbookContent", map);
+		return cnt;
+	}
+	
+	public int deleteEbookAllContentByChapterSeq(Map<String, Object> map) throws Exception {
+		int cnt = sqlSession.update(namespace + ".deleteEbookAllContentByChapterSeq", map);
+		return cnt;
+	}
+	
+	public int updateEbookContentOrder(Map<String, Object> map) throws Exception {
+		int cnt = sqlSession.update(namespace + ".updateEbookContentOrder", map);
+		return cnt;
+	}
 }

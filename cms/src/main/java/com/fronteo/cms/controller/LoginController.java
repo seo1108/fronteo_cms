@@ -52,7 +52,7 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 			
 			if ("fronteo".equals(adminId) && "123qwe!@#".equals(password)) {
 				params.put("STATUS", "SUCCESS");
-				params.put("returnUrl", "board/press");
+				params.put("returnUrl", "salesforce/salesforce");
 			} else {
 				params.put("STATUS", "FAIL");
 			}

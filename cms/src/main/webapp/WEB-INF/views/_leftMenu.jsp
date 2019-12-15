@@ -53,8 +53,9 @@
   									?"class=\"active\"":"" %>>
 							<a href="/page/banner"><i class="fa fa-circle-o"></i> <span>Home</span></a>
 						</li>
-						<li>
-							<a href="/page/ediscovrybook"><i class="fa fa-circle-o"></i> <span>eDiscovory Book</span></a>
+						<li <%=curUri.indexOf("page/edbook") > 0
+  									?"class=\"active\"":"" %>>
+							<a href="/page/edbook"><i class="fa fa-circle-o"></i> <span>eDiscovory Book</span></a>
 						</li>
 					</ul>
 				</li>

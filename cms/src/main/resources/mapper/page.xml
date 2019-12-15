@@ -90,9 +90,149 @@
 			eDiscovery 관련 쿼리 
 	
 	-->
-	 
 	
 	
+	 <select id="getTotalEbookCount" resultType="hashmap">
+		SELECT count(*) as cnt FROM TB_EDB_CHAPTER
+	</select>
 	
+	<select id="getEbookList" resultType="hashmap">
+		SELECT 
+			chapterSeq, title, exposure, contents, url,
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate
+		FROM TB_EDB_CHAPTER
+		WHERE 1=1
+		<if test='regFromDate != null and regToDate != null and !regFromDate.equals("") and !regToDate.equals("")'>
+			AND DATE(regdate) BETWEEN #{regFromDate} AND #{regToDate}
+		</if>	
+		<if test='keyword != null and !keyword.equals("")'>
+			AND title like concat('%',  #{keyword}, '%')  
+		</if>	
+		ORDER BY regdate DESC
+		LIMIT #{startIdx}, #{rowCount}
+	</select>
 	
+	<select id="getEbookCount" resultType="hashmap">
+		SELECT count(chapterSeq) cnt
+		FROM TB_EDB_CHAPTER
+		WHERE 1=1
+		<if test='regFromDate != null and regToDate != null and !regFromDate.equals("") and !regToDate.equals("")'>
+			AND DATE(regdate) BETWEEN #{regFromDate} AND #{regToDate}
+		</if>
+		<if test='keyword != null and !keyword.equals("")'>
+			AND title like concat('%',  #{keyword}, '%')  
+		</if>
+		
+	</select>
+	
+	<select id="getEbookDetail" resultType="hashmap">
+		SELECT
+			chapterSeq, title, exposure, contents, url,
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate
+		FROM TB_EDB_CHAPTER
+		WHERE chapterSeq = #{chapterSeq}
+	</select> 
+	
+	<select id="getMaxEbookSeq" resultType="hashmap">
+		SELECT IFNULL(MAX(chapterSeq+1), 1) as chapterSeq, CURDATE() as regdate FROM TB_EDB_CHAPTER
+	</select>
+	
+	<insert id="insertEbook" parameterType="hashmap">
+		INSERT INTO
+		TB_EDB_CHAPTER
+			(title, exposure, contents, url, regdate)
+		VALUES
+			(#{title}, #{exposure}, #{contents}, #{url}, now())
+	</insert>
+	
+	<update id="updateEbook" parameterType="hashmap">
+		UPDATE TB_EDB_CHAPTER
+		SET
+			title = #{title},
+			exposure = #{exposure},
+			contents = #{contents},
+			url = #{url},
+			moddate = now()
+		WHERE 
+			chapterSeq = ${chapterSeq}
+	</update>
+	
+	<delete id="deleteEbook" parameterType="hashmap">
+		DELETE FROM TB_EDB_CHAPTER
+		WHERE
+			chapterSeq IN 
+			<foreach collection="code" item="item" open="(" separator="," close=")" >
+				#{item}
+			</foreach>
+	</delete>
+	
+	<select id="getEbookContentList" resultType="hashmap">
+		SELECT
+			contentSeq, chapterSeq, title, contents, contentOrder,
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate
+		FROM TB_EDB_CONTENT
+		WHERE chapterSeq = #{chapterSeq}
+		ORDER BY contentOrder	 
+	</select>
+	
+	<select id="getEbookContentDetail" resultType="hashmap">
+		SELECT
+			contentSeq, chapterSeq, title, contents, contentOrder,
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate
+		FROM TB_EDB_CONTENT
+		WHERE contentSeq = #{contentSeq}	 
+	</select>
+	
+	<select id="getMaxEbookContentSeq" resultType="hashmap">
+		SELECT IFNULL(MAX(contentSeq+1), 1) as contentSeq, CURDATE() as regdate FROM TB_EDB_CONTENT
+	</select>
+	
+	<select id="getMaxEbookContentOrder" resultType="hashmap">
+		SELECT IFNULL(MAX(contentOrder+1), 1) as contentOrder FROM TB_EDB_CONTENT
+		WHERE chapterSeq = #{chapterSeq}
+	</select>
+	
+	<insert id="insertEbookContent" parameterType="hashmap">
+		INSERT INTO
+		TB_EDB_CONTENT
+			(chapterSeq, title, contents, contentOrder, regdate)
+		VALUES
+			(#{chapterSeq}, #{title}, #{contents}, #{contentOrder}, now())
+	</insert>
+	
+	<update id="updateEbookContent" parameterType="hashmap">
+		UPDATE TB_EDB_CONTENT
+		SET
+			title = #{title},
+			contents = #{contents},
+			moddate = now()
+		WHERE 
+			contentSeq = ${contentSeq}
+	</update>
+	
+	<delete id="deleteEbookContent" parameterType="hashmap">
+		DELETE FROM TB_EDB_CONTENT
+		WHERE
+			contentSeq IN 
+			<foreach collection="code" item="item" open="(" separator="," close=")" >
+				#{item}
+			</foreach>
+	</delete>
+	
+	<delete id="deleteEbookAllContentByChapterSeq" parameterType="hashmap">
+		DELETE FROM TB_EDB_CONTENT
+		WHERE
+			chapterSeq IN 
+			<foreach collection="code" item="item" open="(" separator="," close=")" >
+				#{item}
+			</foreach>
+	</delete>
+	
+	<update id="updateEbookContentOrder" parameterType="hashmap">
+		UPDATE TB_EDB_CONTENT
+		SET
+			contentOrder = #{contentOrder}
+		WHERE contentSeq = #{contentSeq}
+			AND chapterSeq = #{chapterSeq}	
+	</update>
 </mapper>
