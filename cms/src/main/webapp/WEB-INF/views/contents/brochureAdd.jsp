@@ -143,7 +143,7 @@
 						<c:if test="${not empty data.type && data.type eq 'edit'}">
 							<button class="btn btn-danger" style="margin-right:10px;" onclick="deleteContents('${data.contentSeq}');">삭제</button>
 						</c:if>	
-			        	<button class="btn btn-warning" onclick="contentsInsert();">저장 </button>
+			        	<button id="insertBtn" class="btn btn-warning" onclick="contentsInsert();">저장 </button>
 			        </div>
 			        
 		        </div>
@@ -192,6 +192,8 @@
 		}
 		
 	 	event.preventDefault();
+	 	
+	 	$('#insertBtn').prop('disabled', true);
 		
 		var form = $('#frm')[0];
 	        
@@ -221,10 +223,12 @@
 				     });
 				} else {
 					swal("적용 실패하였습니다.","다시 시도해 보시기 바랍니다.", "error");
+					$('#insertBtn').prop('disabled', false);
 				}
 			},
 			error: function(e) {
 				swal("오류가 발생했습니다. 관리자에게 문의하시기 바랍니다.");
+				$('#insertBtn').prop('disabled', false);
 			}
 		});
 		

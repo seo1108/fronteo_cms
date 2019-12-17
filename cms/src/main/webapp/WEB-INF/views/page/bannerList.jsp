@@ -41,7 +41,13 @@
 						<td class="quiztable-content-center-white">${list.regdate}</td>
 						<td class="quiztable-content-center-white">${list.title}</td>
 						<td class="quiztable-content-center-white">
-							<img src="${list.filePath}" style="max-width:200px;" /></td>
+							<c:if test="${not empty list.filePath && list.filePath ne ''}">							
+								<img src="${list.filePath}" style="max-width:300px;" />
+							</c:if>
+							<c:if test="${not empty list.url && list.url ne ''}">							
+								<img src="${list.url}" style="max-width:300px;" />
+							</c:if>
+						</td>
 						<td class="quiztable-content-center-white">
 							<input type="radio" name="exposure${list.bannerSeq}" value="Y" style="margin-right: 10px;" onclick="updateBannerExposure('${list.bannerSeq}');"
 								<c:if test="${list.exposure eq 'Y'}">checked</c:if>><span>노출</span>

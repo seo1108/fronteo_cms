@@ -23,21 +23,8 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 	@Override 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception
 	{ 
-		logger.info("================ Before Method"); 
-		//return super.preHandle(request, response, handler);
-		
-//		boolean bn = true;
-//		
-//		String contextPath = request.getContextPath();
-//		UserInfo info = Util.getUserInfo(request);
-//		if (null == info || !info.isLogin()) {
-//			logger.info("================ GO TO LOGIN");
-//			response.sendRedirect(contextPath+"/login");
-//			bn=false;
-//		} 
-//		
-//		logger.info("================ GO ON");
-//
+		logger.info("================ Before Method");
+
 		boolean bn = true;
 		
 		String contextPath = request.getContextPath();
@@ -46,7 +33,6 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 		String URI = request.getRequestURI();
 		logger.info(String.format(".........indexURL:[%s]/redirectURL:[%s]..URI:[%s]", indexURL,redirectURL,URI));
 		String isRedirect = (String)request.getSession().getAttribute("isRedirect");
-		logger.info("================================ " + contextPath + isRedirect);
 		
 		if (isRedirect != null && isRedirect.equals("T")) {
 			request.getSession().setAttribute("isRedirect", null);
@@ -57,16 +43,13 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 			if (!URI.equals(indexURL) && !URI.equals(redirectURL)) {
 				UserInfo info = Util.getUserInfo(request);
 				if (!info.isLogin()) {
-					logger.info("================================1 " + isRedirect);
 					request.getSession().setAttribute("isRedirect", "T");
 					response.sendRedirect(contextPath+"/login");
 					
 					return false;
 				} else {
-					logger.info("================================2 " + isRedirect);
 				}
 			} else {
-				logger.info("================================3 " + isRedirect);
 			}
 		}
 

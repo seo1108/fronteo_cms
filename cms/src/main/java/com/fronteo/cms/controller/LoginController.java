@@ -56,7 +56,7 @@ public class LoginController {
 			String password = Util.checkNull(params.get("password"), "");
 			
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("userId", adminId);
+			map.put("adminId", adminId);
 			map.put("password", password);
 			
 			boolean isExist = service.checkLogin(map, req, res);

@@ -1,17 +1,17 @@
 package com.fronteo.cms.dto;
 
 public class UserInfo {
-	private String userId;
+	private String adminId;
 
-	public String getUserId() {
-		return userId;
+	public String getAdminId() {
+		return adminId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setAdminId(String adminId) {
+		this.adminId = adminId;
 	}
-	
+
 	public boolean isLogin(){
-		return userId==null || userId.equals("")?false:true;
+		return adminId==null || adminId.equals("")?false:true;
 	}
 }

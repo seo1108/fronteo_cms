@@ -129,9 +129,13 @@ public class PageController {
             ,HttpServletResponse res) {
 		String msg = "";
 		try {
-			String filepath = ContentFileUpload(req, res);
-			params.put("filePath", filepath);
-
+			if ("".equals(params.get("file_route")) || params.get("file_route").toString().contains(Const.BANNER_SERVER_PATH)) {
+				params.put("filePath", params.get("file_route"));
+			} else {
+				String filepath = ContentFileUpload(req, res);
+				params.put("filePath", filepath);	
+			}
+			
 			int result = 0;
 			
 			result = service.insertBanner(params);

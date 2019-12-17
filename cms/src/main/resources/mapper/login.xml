@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="login">
+
+	<select id="existAdmin" resultType="boolean">
+		SELECT EXISTS(
+			SELECT * FROM TB_ADMIN
+			WHERE adminId = #{adminId} 
+				AND password = #{password}
+		)
+	</select>
+	
+	<select id="getAdminInfo" resultType="hashmap">
+		SELECT * FROM TB_ADMIN
+		WHERE adminId = #{adminId} 
+	</select> 
+</mapper>
