@@ -6,18 +6,82 @@
 <%@page import="java.util.UUID"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.io.File"%>
+<%@page import="java.sql.Timestamp"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@page import="java.util.List"%>
 <%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
 <%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
+<%@page import="org.springframework.web.multipart.MultipartHttpServletRequest"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="org.springframework.web.multipart.MultipartFile"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
+<%@page import="com.fronteo.cms.common.Const"%>
  
 <%
 String return1="";
 String return2="";
 String return3="";
 String name = "";
+String filepath = "";
  
 if (ServletFileUpload.isMultipartContent(request)){
+	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+	
+/* 	try { 
+		String path = Const.BANNER_FILE_UPLOAD_PATH;
+		
+		String filename = "";
+		
+		MultipartHttpServletRequest mhsr = (MultipartHttpServletRequest) request; 
+		Iterator iter = mhsr.getFileNames(); 
+		MultipartFile mfile = null; 
+		String fieldName = ""; 
+		String origName = ""; 
+		List resultList = new ArrayList(); 
+		
+		File dir = new File(path); 
+		if (!dir.isDirectory()) { 
+			dir.mkdirs(); 
+		}  
+		while (iter.hasNext()) { 
+			fieldName = (String) iter.next(); 
+			mfile = mhsr.getFile(fieldName); 
+			
+			origName = new String(mfile.getOriginalFilename().getBytes(), "UTF-8"); 
+			
+			if ("".equals(origName)) { continue; } 
+			String extension = "";
+			int lastIndexOf = origName.lastIndexOf(".");
+		    if (lastIndexOf == -1) {
+		        
+		    }
+		    extension = origName.substring(lastIndexOf);
+		    
+			String saveFileName = origName.substring(0, origName.lastIndexOf(".")) + "_" + timestamp.getTime() + extension;
+			filename = saveFileName;
+			
+			File serverFile = new File(path + File.separator + saveFileName); 
+			mfile.transferTo(serverFile); 
+			Map file = new HashMap(); 
+			file.put("origName", origName); 
+			file.put("sfile", serverFile); 
+			resultList.add(file); 
+		}
+		
+		if (!"".equals(filename)) {
+			filepath = Const.BANNER_SERVER_PATH+filename;
+		}
+		
+		
+	} catch (Exception ex) {
+		ex.printStackTrace();
+	}
+	 */
+	
+	
+	
     ServletFileUpload uploadHandler = new ServletFileUpload(new DiskFileItemFactory());
     uploadHandler.setHeaderEncoding("UTF-8");
     List<FileItem> items = uploadHandler.parseRequest(request);
@@ -46,7 +110,8 @@ if (ServletFileUpload.isMultipartContent(request)){
                     //파일 기본경로
                     String dftFilePath = request.getSession().getServletContext().getRealPath("/");
                     //파일 기본경로 _ 상세경로
-                    String filePath = dftFilePath + "resources" + File.separator + "uploadimages" + File.separator;
+                    //String filePath = dftFilePath + "resources" + File.separator + "uploadimages" + File.separator;
+                    String filePath = Const.BANNER_FILE_UPLOAD_PATH;
         			//String filePath = "/data/cms_resources/smarteditor/photo_uploader/uploadImg/";
                      
                     File file = null;
@@ -59,7 +124,7 @@ if (ServletFileUpload.isMultipartContent(request)){
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
                     String today= formatter.format(new java.util.Date());
                     realFileNm = today+UUID.randomUUID().toString() + name.substring(name.lastIndexOf("."));
-                     
+                    
                     String rlFileNm = filePath + realFileNm;
                     ///////////////// 서버에 파일쓰기 ///////////////// 
                     InputStream is = item.getInputStream();
@@ -81,13 +146,13 @@ if (ServletFileUpload.isMultipartContent(request)){
                     return3 += "&sFileName="+ name;
                     //return3 += "&sFileURL=/resources/smarteditor/photo_uploader/uploadImg/"+realFileNm;
                     //return3 += "&sFileURL=/aimg/smarteditor/photo_uploader/uploadImg/"+realFileNm;
-                    return3 += "&sFileURL=/resources/uploadimages/"+realFileNm;
+                    return3 += "&sFileURL="+Const.BANNER_SERVER_PATH+realFileNm;
                 }
             }else {
                   return3 += "&errstr=error";
             }
         }
-    }
+    } 
 }
 response.sendRedirect(return1+return2+return3);
  

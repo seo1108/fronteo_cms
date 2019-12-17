@@ -1,5 +1,6 @@
 package com.fronteo.cms.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,11 +20,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fronteo.cms.common.Util;
+import com.fronteo.cms.service.LoginService;
 
 @Controller
 public class LoginController {
-private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
+	@Inject
+	private LoginService service;
+
 	@RequestMapping(value = "/redirect", method = RequestMethod.GET)
 	public ModelAndView indexRedirct(@RequestParam Map<String, String> params, Model model, HttpServletRequest req,
 			HttpServletResponse res) {
@@ -50,7 +55,13 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 			String adminId = Util.checkNull(params.get("adminId"), "");
 			String password = Util.checkNull(params.get("password"), "");
 			
-			if ("fronteo".equals(adminId) && "123qwe!@#".equals(password)) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("userId", adminId);
+			map.put("password", password);
+			
+			boolean isExist = service.checkLogin(map, req, res);
+			
+			if (isExist) {
 				params.put("STATUS", "SUCCESS");
 				params.put("returnUrl", "salesforce/salesforce");
 			} else {

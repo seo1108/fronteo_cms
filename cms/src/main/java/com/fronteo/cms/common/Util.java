@@ -1,5 +1,9 @@
 package com.fronteo.cms.common;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.fronteo.cms.dto.UserInfo;
+
 public class Util {
 	public Util(){	}
 	
@@ -17,4 +21,10 @@ public class Util {
         }
         return strRtn ;
     }
+    
+    public static UserInfo getUserInfo(HttpServletRequest request){
+   	 UserInfo info = (UserInfo)request.getSession().getAttribute("SESSION_USERINFO");
+		
+   	 return info == null?new UserInfo():info;
+	}
 }
