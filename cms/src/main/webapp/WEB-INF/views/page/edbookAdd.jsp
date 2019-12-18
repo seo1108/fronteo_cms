@@ -138,6 +138,7 @@
 					</form>
 					
 					<div style="float:right;padiing-top:100px;padding-top:10px;padding-bottom:10px;">
+						<button class="btn btn-info" style="margin-right:10px;" onclick="preview('${data.chapterSeq}', '${data.type}', '${data.previewUrl}');">미리보기</button>
 						<button class="btn btn-success" style="margin-right:10px;" onclick="go_list();">목록으로 가기</button>
 						<c:if test="${not empty data.type && data.type eq 'edit'}">
 							<button class="btn btn-danger" style="margin-right:10px;" onclick="deleteEbook('${data.chapterSeq}');">삭제</button>
@@ -355,7 +356,8 @@
 					.then(function(value)  { 
 						  if(value){
 							  //location.href="/board/press";
-							  window.location=document.referrer;
+							  //window.location=document.referrer;
+							  history.go(0);
 						  } 
 				     });
 				} else {
@@ -406,6 +408,14 @@
 		    	break;
 			}
 		});
+    }
+    
+    function preview(chapterSeq, type, url) {
+    	if ('edit' == type) {
+    		window.open(url+"?chapterSeq="+chapterSeq, '_blank');
+    	} else {
+    		swal("미리보기는 저장 후 볼 수 있습니다.", "", "info");
+    	}
     }
     
     function go_detail_content(chaptername, chapterSeq) {

@@ -134,12 +134,12 @@
 						             	<input type="text" value="${data.phone}" class="form-control" style="display:inline;" readOnly/>
 						             </td>
 					              </tr>
-					              <%-- <tr>
+					              <tr>
 					                 <th class="quiztable-content-center-white">이메일</th>
 						             <td>
 						             	<input type="text" value="${data.email}" class="form-control" style="display:inline;" readOnly/>
 						             </td>
-					              </tr> --%>
+					              </tr>
 					              <tr>
 					                 <th class="quiztable-content-center-white">회사</th>
 						             <td>

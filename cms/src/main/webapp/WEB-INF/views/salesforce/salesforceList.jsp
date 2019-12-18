@@ -30,7 +30,7 @@
 					<th class="text-center">성</th>
 					<th class="text-center">이름</th>
 					<th class="text-center">연락처</th>
-					<!-- <th class="text-center">이메일</th> -->
+					<th class="text-center">이메일</th>
 					<th class="text-center">회사명</th>
 					<th class="text-center">보기</th>
 				</tr>
@@ -45,7 +45,7 @@
 						<td class="quiztable-content-center-white">${list.familyname}</td>
 						<td class="quiztable-content-center-white">${list.firstname}</td>
 						<td class="quiztable-content-center-white">${list.phone}</td>
-						<%-- <td class="quiztable-content-center-white">${list.email}</td> --%>
+						<td class="quiztable-content-center-white">${list.email}</td>
 						<td class="quiztable-content-center-white">${list.company}</td>
 						<td class="quiztable-content-center-white">
 							<button class="btn btn-primary btn-sm" onclick="go_detail('${list.customerSeq}');">상세보기</button>

@@ -299,6 +299,7 @@ public class PageController {
 				model.addAttribute("needOrderUpdate", "Y");
 			}
 			
+			map.put("previewUrl", Const.PREVIEW_URL);
 			map.put("type", params.get("type"));
 			model.addAttribute("data", map);
 		} catch (Exception ex) {
@@ -400,6 +401,7 @@ public class PageController {
 			}
 			
 			map.put("type", params.get("type"));
+			map.put("previewUrl", Const.PREVIEW_URL);
 			model.addAttribute("chaptername", params.get("chaptername"));
 			model.addAttribute("chapterSeq", params.get("chapterSeq"));
 			model.addAttribute("data", map);

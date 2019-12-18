@@ -102,6 +102,7 @@
 					</form>
 					
 					<div style="float:right;padiing-top:100px;padding-top:10px;padding-bottom:10px;">
+						<button class="btn btn-info" style="margin-right:10px;" onclick="preview('${chapterSeq}', '${data.type}', '${data.previewUrl}');">미리보기</button>
 						<button class="btn btn-success" style="margin-right:10px;" onclick="go_chapter('${chapterSeq }');">챕터 상세로 가기</button>
 						<c:if test="${not empty data.type && data.type eq 'edit'}">
 							<button class="btn btn-danger" style="margin-right:10px;" onclick="deleteEbookContent('${data.contentSeq}', '${chapterSeq }');">삭제</button>
@@ -192,7 +193,8 @@
 					swal("적용되었습니다.","", "success")
 					.then(function(value)  { 
 						  if(value){
-							  $.redirect( "edbookAdd", { chapterSeq : chapterSeq, type : 'edit' }, "POST", "" );
+							  //$.redirect( "edbookAdd", { chapterSeq : chapterSeq, type : 'edit' }, "POST", "" );
+							  history.go(0);
 						  } 
 				     });
 				} else {
@@ -241,6 +243,14 @@
 		    	break;
 			}
 		});
+    }
+    
+    function preview(chapterSeq, type, url) {
+    	if ('edit' == type) {
+    		window.open(url+"?chapterSeq="+chapterSeq, '_blank');
+    	} else {
+    		swal("미리보기는 저장 후 보실 수 있습니다.", "", "info");
+    	}
     }
     
     function go_chapter(chapterSeq) {

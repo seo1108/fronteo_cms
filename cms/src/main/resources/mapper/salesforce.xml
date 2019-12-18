@@ -15,7 +15,7 @@
 	
 	<select id="getSalesforceList" resultType="hashmap">
 		SELECT 
-			customerSeq, pathType, concern, inquiry, familyname, firstname, company,
+			customerSeq, pathType, concern, inquiry, familyname, firstname, company, email,
 			phone, deptname, titlename, recvEmail,
 			DATE_FORMAT(regdate,'%Y-%m-%d') regdate
 		FROM TB_SALESFORCE
@@ -44,7 +44,7 @@
 	
 	<select id="getSalesforceDetail" resultType="hashmap">
 		SELECT
-			customerSeq, pathType, concern, inquiry, familyname, firstname, company,
+			customerSeq, pathType, concern, inquiry, familyname, firstname, company, email,
 			phone, deptname, titlename, recvEmail,
 			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate
 		FROM TB_SALESFORCE
