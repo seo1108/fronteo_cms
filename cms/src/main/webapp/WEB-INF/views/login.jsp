@@ -70,6 +70,7 @@
     
     <script src="../resources/plugins/iCheck/icheck.min.js"></script>
     <script src="../resources/customJS/common.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
     <script>
       $(function () {
@@ -95,9 +96,9 @@
 		var password	= $('#password').val();
 		console.log(adminId + ' ' + password);
 		if (adminId == '') {
-			alert('사용자아이디를 입력하세요.');
+			swal("사용자아이디를 입력하세요.", "", "info");
 		} else if (password == '') {
-			alert('비밀번호를 입력하세요.');
+			swal("비밀번호를 입력하세요.", "", "info");
 		} else {
 			var url='json/login';
 			var params = {
@@ -115,7 +116,7 @@
 		if ('SUCCESS' == data.STATUS) {
 			window.location.href = data.returnUrl.length > 0 ? data.returnUrl : "/";
 		} else if ('FAIL' == data.STATUS) {
-			alert('로그인에 실패했습니다.');
+			swal("로그인에 실패했습니다.", "", "error");
 		}
 	}
 
