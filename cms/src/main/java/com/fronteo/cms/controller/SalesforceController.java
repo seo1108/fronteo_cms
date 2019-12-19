@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fronteo.cms.common.Const;
+import com.fronteo.cms.common.EncryptUtil;
 import com.fronteo.cms.common.Util;
 import com.fronteo.cms.service.SalesforceService;
 
@@ -52,6 +53,7 @@ public class SalesforceController {
 			,HttpServletRequest req
             ,HttpServletResponse res) {
 		try {
+			EncryptUtil encrypt = new EncryptUtil();
 			int rowCount = Integer.parseInt(params.get("rowCount").toString());
 			int startIdx = 0;
 			int page = Integer.parseInt(Util.checkNull(params.get("page"), "1"));
@@ -69,6 +71,15 @@ public class SalesforceController {
 			List<Map<String, Object>> list = service.getSalesforceList(params);
 			
 			for (Map<String,Object> rmap:list) {
+				// 암호화 --> 복호화
+				rmap.put("familyname", encrypt.decAES(Util.checkNull(rmap.get("familyname"), "")));
+				rmap.put("firstname", encrypt.decAES(Util.checkNull(rmap.get("firstname"), "")));
+				rmap.put("company", encrypt.decAES(Util.checkNull(rmap.get("company"), "")));
+				rmap.put("email", encrypt.decAES(Util.checkNull(rmap.get("email"), "")));
+				rmap.put("phone", encrypt.decAES(Util.checkNull(rmap.get("phone"), "")));
+				rmap.put("deptname", encrypt.decAES(Util.checkNull(rmap.get("deptname"), "")));
+				rmap.put("titlename", encrypt.decAES(Util.checkNull(rmap.get("titlename"), "")));
+				
 				// 분류명 
 				if ("1".equals(rmap.get("pathType"))) 
 				{
