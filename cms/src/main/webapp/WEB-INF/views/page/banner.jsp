@@ -163,7 +163,7 @@
 	
 	jQuery(document).ready(function() {
 		$('#regDate').daterangepicker({
-			autoUpdateInput: true,
+			autoUpdateInput: false,
 			ranges: {
 				'오늘': [moment(), moment()],
 				'어제': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],

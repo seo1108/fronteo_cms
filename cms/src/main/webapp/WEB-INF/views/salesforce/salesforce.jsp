@@ -160,7 +160,7 @@
 	
 	jQuery(document).ready(function() {
 		$('#regDate').daterangepicker({
-			autoUpdateInput: true,
+			autoUpdateInput: false,
 			ranges: {
 				'오늘': [moment(), moment()],
 				'어제': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -176,8 +176,6 @@
 		}, function(start_date, end_date) {
 		    $('#regDate').val(start_date.format('YYYY-MM-DD')+' - '+end_date.format('YYYY-MM-DD'));
 		});
-		
-		
 		
 		$("#divList").load("salesforceList?&rowCount=${rowCount}&page=1", function(data) {});
     });
@@ -204,7 +202,6 @@
 	
 	function clearFilter() {
 		$('#regDate').val('');
-		$('#keyword').val('');
 		$("input:radio[name=search_type]:input[value='']").attr("checked", true);
 	}
 

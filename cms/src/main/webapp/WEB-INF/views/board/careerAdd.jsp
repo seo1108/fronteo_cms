@@ -218,16 +218,7 @@
 	
 	jQuery(document).ready(function(){
 		$('#careerDate').daterangepicker({
-			autoUpdateInput: true,
-			ranges: {
-				'오늘': [moment(), moment()],
-				'어제': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-				'1주일': [moment().subtract(1, 'weeks'), moment().subtract(1, 'days')],
-				'1개월': [moment().subtract(1, 'months'), moment().subtract(1, 'days')],
-				'3개뭘': [moment().subtract(3, 'months'), moment().subtract(1, 'days')],
-				'6개월': [moment().subtract(6, 'months'), moment().subtract(1, 'days')],
-				'1년': [moment().subtract(1, 'years'), moment().subtract(1, 'days')]
-			},
+			autoUpdateInput: false,
 			locale: {
 				format: "YYYY-MM-DD"
 			}
@@ -241,11 +232,9 @@
 		});
 		
 		$("#chkAnytime").change(function(){
-	        if($("#chkAnytime").is(":checked")) {
+			if($("#chkAnytime").is(":checked")) {
+				initDateRangePicker();
 	        	$('#isAnytime').val('Y');
-	        	$('#careerDate').val('');
-	        	$('#startDate').val('');
-			    $('#endDate').val('');
 	        } else {
 	        	$('#isAnytime').val('N');
 	        }
@@ -272,8 +261,6 @@
 			    $('#endDate').val('');
 			}
 		}
-		
-		
     });
 	
 	
@@ -288,6 +275,28 @@
 	
 	});
 	
+	function initDateRangePicker() {
+		$('#careerDate').daterangepicker({
+			autoUpdateInput: false,
+			locale: {
+				format: "YYYY-MM-DD"
+			},
+			startDate: moment(),
+			endDate: moment()
+		}, function(start_date, end_date) {
+			$('#careerDate').val(start_date.format('YYYY-MM-DD')+' - '+end_date.format('YYYY-MM-DD'));
+		    
+		    $('#startDate').val(start_date.format('YYYYMMDD'));
+		    $('#endDate').val(end_date.format('YYYYMMDD'));
+		    $("#chkAnytime").prop('checked', false); 
+		    $('#isAnytime').val('N');
+		});
+		
+		$('#careerDate').val('');
+    	$('#startDate').val('');
+	    $('#endDate').val('');
+	}
+	
 	function bbsInsert() {
     	// id가 smarteditor인 textarea에 에디터에서 대입
 		oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []); 
@@ -300,6 +309,12 @@
 		//내용체크
 		if($.trim($("#contents").val()) ==''){
 			swal("내용을 입력해 주세요.", "", "info");
+			return false;
+		}
+		
+		// 모집기간 체크
+		if (false == $("input:checkbox[id='chkAnytime']").is(":checked") && $('#careerDate').val() == '') {
+			swal("모집기간을 확인해 주세요.", "", "info");
 			return false;
 		}
 		
