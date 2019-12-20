@@ -14,7 +14,7 @@
 
  				<li class="treeview" data-uri="/salesforce/">
 					<a href="/salesforce/salesforce">
-						<i class="fa fa-crosshairs"></i> <span>SalesForce 관리</span> 
+						<i class="fa fa-briefcase"></i> <span>SalesForce 관리</span> 
 					</a>
 				</li>
 
@@ -25,20 +25,20 @@
 					<ul class="treeview-menu">
 						<li <%=curUri.indexOf("board/press") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/board/press"><i class="fa fa-circle-o"></i> <span>Press</span></a>
+							<a href="/board/press"><i class="fa fa-angle-right"></i> <span>Press</span></a>
 						</li>
 						<li <%=curUri.indexOf("board/event") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/board/event"><i class="fa fa-circle-o"></i> <span>Event</span></a>
+							<a href="/board/event"><i class="fa fa-angle-right"></i> <span>Event</span></a>
 						</li>
 						<li <%=curUri.indexOf("board/career") > 0
   									?"class=\"active\"":"" %>>
-  							<a href="/board/career"><i class="fa fa-circle-o"></i> <span>Careers</span>
+  							<a href="/board/career"><i class="fa fa-angle-right"></i> <span>Careers</span>
 							</a>	
 						</li>	
 						<li <%=curUri.indexOf("board/faq") > 0
   									?"class=\"active\"":"" %>>
-  							<a href="/board/faq"><i class="fa fa-circle-o"></i> <span>FAQs</span>
+  							<a href="/board/faq"><i class="fa fa-angle-right"></i> <span>FAQs</span>
 							</a>	
 						</li>	
 					</ul>
@@ -46,44 +46,44 @@
 
 				<li class="treeview" data-uri="/page/">
 					<a href="#">
-						<i class="fa fa-object-ungroup"></i> <span>페이지 관리</span> <i class="fa fa-angle-left pull-right"></i>
+						<i class="fa fa-edit"></i> <span>페이지 관리</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 					<ul class="treeview-menu">
 						<li <%=curUri.indexOf("page/banner") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/page/banner"><i class="fa fa-circle-o"></i> <span>Home</span></a>
+							<a href="/page/banner"><i class="fa fa-angle-right"></i> <span>Home</span></a>
 						</li>
 						<li <%=curUri.indexOf("page/edbook") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/page/edbook"><i class="fa fa-circle-o"></i> <span>eDiscovory Book</span></a>
+							<a href="/page/edbook"><i class="fa fa-angle-right"></i> <span>eDiscovory Book</span></a>
 						</li>
 					</ul>
 				</li>
 
             	<li class="treeview" data-uri="/contents/">
  					<a href="#">
-						<i class="fa fa-book"></i> <span>콘텐츠 관리</span> <i class="fa fa-angle-left pull-right"></i>
+						<i class="fa fa-file-pdf-o"></i> <span>콘텐츠 관리</span> <i class="fa fa-angle-left pull-right"></i>
 					</a>
 					<ul class="treeview-menu">
   						<li <%=curUri.indexOf("contents/brochure") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/contents/brochure"><i class="fa fa-circle-o"></i>Company Brochure</a>
+							<a href="/contents/brochure"><i class="fa  fa-angle-right"></i>Company Brochure</a>
    						</li>
   						<li <%=curUri.indexOf("contents/briefs") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/contents/briefs"><i class="fa fa-circle-o"></i>Product Briefs</a>
+							<a href="/contents/briefs"><i class="fa  fa-angle-right"></i>Product Briefs</a>
    						</li>
    						<li <%=curUri.indexOf("contents/video") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/contents/video"><i class="fa fa-circle-o"></i>Videos</a>
+							<a href="/contents/video"><i class="fa fa-angle-right"></i>Videos</a>
    						</li>	
    						<li <%=curUri.indexOf("contents/ebook") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/contents/ebook"><i class="fa fa-circle-o"></i>E-Book</a>
+							<a href="/contents/ebook"><i class="fa fa-angle-right"></i>E-Book</a>
    						</li>
    						<li <%=curUri.indexOf("contents/whitepaper") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/contents/whitepaper"><i class="fa fa-circle-o"></i>Whitepapers</a>
+							<a href="/contents/whitepaper"><i class="fa fa-angle-right"></i>Whitepapers</a>
    						</li>
 					</ul>
 				</li>
