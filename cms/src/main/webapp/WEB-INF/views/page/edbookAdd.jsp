@@ -275,7 +275,7 @@
     	});
     	
     	if (ids.length > 0) {
-	    	$.post('/json/updateEbookContentOrder', { code: ids.join(), chapterSeq : chapterSeq }, function(data) {
+	    	$.post('<%=request.getContextPath() %>/json/updateEbookContentOrder', { code: ids.join(), chapterSeq : chapterSeq }, function(data) {
 				if (data.STATUS == 'SUCCESS') {
 					swal('총 ' + new Intl.NumberFormat('en-US').format(data.RequestCount) + '건 중 ' + new Intl.NumberFormat('en-US').format(data.SavedCount) + '건이 저장되었습니다.',"", "success")
 					.then(function(value)  { 
@@ -301,7 +301,7 @@
     	});
     	
     	if (ids.length > 0) {
-	    	$.post('/json/updateEbookContentOrder', { code: ids.join(), chapterSeq : chapterSeq }, function(data) {
+	    	$.post('<%=request.getContextPath() %>/json/updateEbookContentOrder', { code: ids.join(), chapterSeq : chapterSeq }, function(data) {
 				if (data.STATUS == 'SUCCESS') {
 					$.redirect( "edbookAdd", { chapterSeq : chapterSeq, type : 'edit' }, "POST", "" );
 				} else {
@@ -342,7 +342,7 @@
 		//var params = $("#frm").serialize();
 		
 		$.ajax({
-			url: "/page/edbookInsert",
+			url: "<%=request.getContextPath() %>/page/edbookInsert",
 			type: "post",
 			enctype: 'multipart/form-data',
 			data: params,
@@ -351,13 +351,14 @@
 			timeout: 600000,
 			cache: false,
 			success: function(data) {
-				if(data=="ok") {
+				if(data!="fail") {
 					swal("적용되었습니다.","", "success")
 					.then(function(value)  { 
 						  if(value){
 							  //location.href="/board/press";
 							  //window.location=document.referrer;
-							  history.go(0);
+							  //history.go(0);
+							  $.redirect( "edbookAdd", { chapterSeq : data, type : 'edit' }, "POST", "" );
 						  } 
 				     });
 				} else {
@@ -386,8 +387,8 @@
 		    	var codes = [];
 		    	codes.push(chapterSeq);
 		    	
-		    	$.post('/json/deleteEbookAllContentByChapterSeq', { code: codes.join() }, function(data) {
-		    		$.post('/json/deleteEdbook', { code: codes.join() }, function(data) {
+		    	$.post('<%=request.getContextPath() %>/json/deleteEbookAllContentByChapterSeq', { code: codes.join() }, function(data) {
+		    		$.post('<%=request.getContextPath() %>/json/deleteEdbook', { code: codes.join() }, function(data) {
 						if (data.STATUS == 'SUCCESS') {
 							swal('삭제되었습니다.',"", "success")
 							.then(function(value)  { 

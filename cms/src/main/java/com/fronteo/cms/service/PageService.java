@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.fronteo.cms.dao.PageDao;
+import com.fronteo.cms.dto.Ebook;
 
 @Service
 public class PageService {
@@ -65,8 +66,8 @@ public class PageService {
 		return dao.getMaxEbookSeq(map);
 	}
 	
-	public int insertEbook(Map<String, Object> map) throws Exception {
-		return dao.insertEbook(map);
+	public int insertEbook(Ebook ebook) throws Exception {
+		return dao.insertEbook(ebook);
 	}
 	
 	public int updateEbook(Map<String, Object> map) throws Exception {

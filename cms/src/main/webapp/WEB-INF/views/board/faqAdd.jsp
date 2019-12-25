@@ -223,7 +223,7 @@
 		//var params = $("#frm").serialize();
 		
 		$.ajax({
-			url: "/board/bbsInsert",
+			url: "<%=request.getContextPath() %>/board/bbsInsert",
 			type: "post",
 			enctype: 'multipart/form-data',
 			data: params,
@@ -266,7 +266,7 @@
 		    	var codes = [];
 		    	codes.push(bbsSeq);
 				
-				$.post('/json/deleteBbs', { code: codes.join() }, function(data) {
+				$.post('<%=request.getContextPath() %>/json/deleteBbs', { code: codes.join() }, function(data) {
 					if (data.STATUS == 'SUCCESS') {
 						swal('삭제되었습니다.',"", "success")
 						.then(function(value)  { 

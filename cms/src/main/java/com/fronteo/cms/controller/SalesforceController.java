@@ -149,8 +149,18 @@ public class SalesforceController {
 			,HttpServletRequest req
             ,HttpServletResponse res) {
 		try {
+			EncryptUtil encrypt = new EncryptUtil();
+			
 			Map<String, Object> map = service.getSalesforceDetail(params);
 			
+			// 암호화 --> 복호화
+			map.put("familyname", encrypt.decAES(Util.checkNull(map.get("familyname"), "")));
+			map.put("firstname", encrypt.decAES(Util.checkNull(map.get("firstname"), "")));
+			map.put("company", encrypt.decAES(Util.checkNull(map.get("company"), "")));
+			map.put("email", encrypt.decAES(Util.checkNull(map.get("email"), "")));
+			map.put("phone", encrypt.decAES(Util.checkNull(map.get("phone"), "")));
+			map.put("deptname", encrypt.decAES(Util.checkNull(map.get("deptname"), "")));
+			map.put("titlename", encrypt.decAES(Util.checkNull(map.get("titlename"), "")));
 			
 			// 분류명 
 			if ("1".equals(map.get("pathType"))) 

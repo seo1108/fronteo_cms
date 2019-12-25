@@ -13,7 +13,7 @@
 				<li class="header">MENUS</li>
 
  				<li class="treeview" data-uri="/salesforce/">
-					<a href="/salesforce/salesforce">
+					<a href="<%=request.getContextPath()%>/salesforce/salesforce">
 						<i class="fa fa-briefcase"></i> <span>SalesForce 관리</span> 
 					</a>
 				</li>
@@ -25,20 +25,20 @@
 					<ul class="treeview-menu">
 						<li <%=curUri.indexOf("board/press") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/board/press"><i class="fa fa-angle-right"></i> <span>Press</span></a>
+							<a href="<%=request.getContextPath()%>/board/press"><i class="fa fa-angle-right"></i> <span>Press</span></a>
 						</li>
 						<li <%=curUri.indexOf("board/event") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/board/event"><i class="fa fa-angle-right"></i> <span>Event</span></a>
+							<a href="<%=request.getContextPath()%>/board/event"><i class="fa fa-angle-right"></i> <span>Event</span></a>
 						</li>
 						<li <%=curUri.indexOf("board/career") > 0
   									?"class=\"active\"":"" %>>
-  							<a href="/board/career"><i class="fa fa-angle-right"></i> <span>Careers</span>
+  							<a href="<%=request.getContextPath()%>/board/career"><i class="fa fa-angle-right"></i> <span>Careers</span>
 							</a>	
 						</li>	
 						<li <%=curUri.indexOf("board/faq") > 0
   									?"class=\"active\"":"" %>>
-  							<a href="/board/faq"><i class="fa fa-angle-right"></i> <span>FAQs</span>
+  							<a href="<%=request.getContextPath()%>/board/faq"><i class="fa fa-angle-right"></i> <span>FAQs</span>
 							</a>	
 						</li>	
 					</ul>
@@ -51,11 +51,11 @@
 					<ul class="treeview-menu">
 						<li <%=curUri.indexOf("page/banner") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/page/banner"><i class="fa fa-angle-right"></i> <span>Home</span></a>
+							<a href="<%=request.getContextPath()%>/page/banner"><i class="fa fa-angle-right"></i> <span>Home</span></a>
 						</li>
 						<li <%=curUri.indexOf("page/edbook") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/page/edbook"><i class="fa fa-angle-right"></i> <span>eDiscovory Book</span></a>
+							<a href="<%=request.getContextPath()%>/page/edbook"><i class="fa fa-angle-right"></i> <span>eDiscovory Book</span></a>
 						</li>
 					</ul>
 				</li>
@@ -67,23 +67,23 @@
 					<ul class="treeview-menu">
   						<li <%=curUri.indexOf("contents/brochure") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/contents/brochure"><i class="fa  fa-angle-right"></i>Company Brochure</a>
+							<a href="<%=request.getContextPath()%>/contents/brochure"><i class="fa  fa-angle-right"></i>Company Brochure</a>
    						</li>
   						<li <%=curUri.indexOf("contents/briefs") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/contents/briefs"><i class="fa  fa-angle-right"></i>Product Briefs</a>
+							<a href="<%=request.getContextPath()%>/contents/briefs"><i class="fa  fa-angle-right"></i>Product Briefs</a>
    						</li>
    						<li <%=curUri.indexOf("contents/video") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/contents/video"><i class="fa fa-angle-right"></i>Videos</a>
+							<a href="<%=request.getContextPath()%>/contents/video"><i class="fa fa-angle-right"></i>Videos</a>
    						</li>	
    						<li <%=curUri.indexOf("contents/ebook") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/contents/ebook"><i class="fa fa-angle-right"></i>E-Book</a>
+							<a href="<%=request.getContextPath()%>/contents/ebook"><i class="fa fa-angle-right"></i>E-Book</a>
    						</li>
    						<li <%=curUri.indexOf("contents/whitepaper") > 0
   									?"class=\"active\"":"" %>>
-							<a href="/contents/whitepaper"><i class="fa fa-angle-right"></i>Whitepapers</a>
+							<a href="<%=request.getContextPath()%>/contents/whitepaper"><i class="fa fa-angle-right"></i>Whitepapers</a>
    						</li>
 					</ul>
 				</li>

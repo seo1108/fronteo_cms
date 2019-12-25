@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fronteo.cms.common.Const;
 import com.fronteo.cms.common.Util;
+import com.fronteo.cms.dto.Ebook;
 import com.fronteo.cms.service.PageService;
 
 @Controller
@@ -318,24 +319,35 @@ public class PageController {
 	public String edbookInsert(@RequestParam Map<String,Object> params
 			,HttpServletRequest req
             ,HttpServletResponse res) {
-		String msg = "";
+		String msg = "fail";
 		try {
 			int result = 0;
 			
 			if (null != params.get("updateType") && "edit".equals(params.get("updateType"))) 
 			{
 				result = service.updateEbook(params);
+				
+				if (result > 0) {
+					msg = "ok";
+				} else {
+					msg = "fail";
+				}
 			}
 			else 
 			{
-				result = service.insertEbook(params);
-			}
-			
-			
-			if (result > 0) {
-				msg = "ok";
-			} else {
-				msg = "fail";
+				Ebook ebook = new Ebook();
+				ebook.setTitle(params.get("title").toString());
+				ebook.setExposure(params.get("exposure").toString());
+				ebook.setContents(params.get("contents").toString());
+				ebook.setUrl(params.get("url").toString());
+				
+				result = service.insertEbook(ebook);
+				
+				if (result > 0) {
+					msg = String.valueOf(result);
+				} else {
+					msg = "fail";
+				}
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

@@ -103,8 +103,8 @@
 					});
 					
 					if (codes.length > 0) {
-						$.post('/json/deleteEbookAllContentByChapterSeq', { code: codes.join() }, function(data) {
-				    		$.post('/json/deleteEdbook', { code: codes.join() }, function(data) {
+						$.post('<%=request.getContextPath() %>/json/deleteEbookAllContentByChapterSeq', { code: codes.join() }, function(data) {
+				    		$.post('<%=request.getContextPath() %>/json/deleteEdbook', { code: codes.join() }, function(data) {
 								if (data.STATUS == 'SUCCESS') {
 									swal('삭제되었습니다.',"", "success")
 									.then(function(value)  { 

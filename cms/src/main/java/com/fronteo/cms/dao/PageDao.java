@@ -10,6 +10,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.fronteo.cms.dto.Ebook;
+
 @Mapper
 @Repository
 public class PageDao {
@@ -86,8 +88,10 @@ public class PageDao {
 		return rmap;
 	}
 	
-	public int insertEbook(Map<String, Object> map) throws Exception {
-		int cnt = sqlSession.update(namespace + ".insertEbook", map);
+	public int insertEbook(Ebook ebook) throws Exception {
+		int cnt;
+		sqlSession.update(namespace + ".insertEbook", ebook);
+		cnt = ebook.getChapterSeq();
 		return cnt;
 	}
 	

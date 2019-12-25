@@ -531,7 +531,7 @@ public class ContentsController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "contents/contentsInsert", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(path = "contents/contentsInsert", method = {RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public String contentsInsert(@RequestParam Map<String,Object> params
 			,HttpServletRequest req

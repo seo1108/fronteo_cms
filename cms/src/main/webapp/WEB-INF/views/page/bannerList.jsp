@@ -104,7 +104,7 @@
 			.then(function(value)  {
 			  switch (value) {
 			    case "defeat":
-			    	$.post('/json/updateBanner', { bannerSeq: bannerSeq }, function(data) {
+			    	$.post('<%=request.getContextPath() %>/json/updateBanner', { bannerSeq: bannerSeq }, function(data) {
 						if (data.STATUS == 'SUCCESS') {
 							swal('적용되었습니다.',"", "success")
 							.then(function(value)  { 
@@ -142,7 +142,7 @@
 					});
 					
 					if (codes.length > 0) {
-						$.post('/json/deleteBanner', { code: codes.join() }, function(data) {
+						$.post('<%=request.getContextPath() %>/json/deleteBanner', { code: codes.join() }, function(data) {
 							if (data.STATUS == 'SUCCESS') {
 								swal('총 ' + new Intl.NumberFormat('en-US').format(data.RequestCount) + '건 중 ' + new Intl.NumberFormat('en-US').format(data.SavedCount) + '건이 삭제되었습니다.',"", "success")
 								.then(function(value)  { 

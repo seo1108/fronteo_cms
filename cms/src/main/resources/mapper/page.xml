@@ -137,7 +137,9 @@
 		SELECT IFNULL(MAX(chapterSeq+1), 1) as chapterSeq, CURDATE() as regdate FROM TB_EDB_CHAPTER
 	</select>
 	
-	<insert id="insertEbook" parameterType="hashmap">
+	<insert id="insertEbook" parameterType="com.fronteo.cms.dto.Ebook"
+		useGeneratedKeys="true"
+		keyProperty="chapterSeq">
 		INSERT INTO
 		TB_EDB_CHAPTER
 			(title, exposure, contents, url, regdate)
