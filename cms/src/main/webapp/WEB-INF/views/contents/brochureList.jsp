@@ -41,7 +41,7 @@
 						<td class="quiztable-content-center-white"><fmt:formatNumber value="${list.contentSeq}" pattern="#,###" /></td>
 						<td class="quiztable-content-center-white">${list.regdate}</td>
 						<td class="quiztable-content-center-white" style="width:35%;">${list.title}</td>
-						<td class="quiztable-content-center-white">${list.filename}</td>
+						<td class="quiztable-content-center-white">${list.fileName}</td>
 						<td class="quiztable-content-center-white">
 							<c:choose>
 								<c:when test="${list.exposure eq 'Y'}">노출</c:when>

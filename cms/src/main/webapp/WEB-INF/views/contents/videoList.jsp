@@ -27,7 +27,7 @@
 					<th class="text-center">NO</th>
 					<th class="text-center">작성일</th>
 					<th class="text-center">제목</th>
-					<th class="text-center">URL</th>
+					<th class="text-center">Youtube ID</th>
 					<th class="text-center">상태</th>
 					<th class="text-center">관리</th>
 				</tr>

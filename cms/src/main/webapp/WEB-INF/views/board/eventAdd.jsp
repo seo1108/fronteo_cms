@@ -76,6 +76,7 @@
 		        <div class="col-xs-12 box box-danger">
 		        	<form name="frm" id="frm" method="post" enctype="multipart/form-data" action="">
 		        		<input type="hidden" name="updateType" id="updateType" value="${data.type }" />
+		        		<input type="hidden" name="fileName" id="fileName" value="${data.fileName }" />
 		        		<input type="hidden" name="bbsType" id="bbsType" value="E" />
 						<div class="card-body">
 							<table class="table table-striped">

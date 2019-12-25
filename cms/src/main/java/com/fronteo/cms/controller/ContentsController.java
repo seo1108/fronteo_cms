@@ -33,6 +33,8 @@ import com.fronteo.cms.common.Const;
 import com.fronteo.cms.common.Util;
 import com.fronteo.cms.service.ContentsService;
 
+import ch.qos.logback.core.joran.action.ParamAction;
+
 @Controller
 public class ContentsController {
 	@Inject
@@ -84,10 +86,10 @@ public class ContentsController {
 			
 			List<Map<String, Object>> list = service.getContentsList(params);
 			
-			for (Map<String,Object> rmap:list) {
-				String filename = rmap.get("filePath").toString().substring(rmap.get("filePath").toString().lastIndexOf("/")+1);
-				rmap.put("filename", filename);
-			}
+//			for (Map<String,Object> rmap:list) {
+//				String filename = rmap.get("filePath").toString().substring(rmap.get("filePath").toString().lastIndexOf("/")+1);
+//				rmap.put("filename", filename);
+//			}
 			
 			model.addAttribute("data", list);
 			model.addAttribute("totalCnt", totalCount);
@@ -182,10 +184,10 @@ public class ContentsController {
 			
 			List<Map<String, Object>> list = service.getContentsList(params);
 			
-			for (Map<String,Object> rmap:list) {
+			/*for (Map<String,Object> rmap:list) {
 				String filename = rmap.get("filePath").toString().substring(rmap.get("filePath").toString().lastIndexOf("/")+1);
 				rmap.put("filename", filename);
-			}
+			}*/
 			
 			model.addAttribute("data", list);
 			model.addAttribute("totalCnt", totalCount);
@@ -373,14 +375,14 @@ public class ContentsController {
 			
 			List<Map<String, Object>> list = service.getContentsList(params);
 			
-			for (Map<String,Object> rmap:list) {
-				if (null == rmap.get("filePath") || "".equals(rmap.get("filePath"))) {
-					rmap.put("filename", "");
-				} else {
-					String filename = rmap.get("filePath").toString().substring(rmap.get("filePath").toString().lastIndexOf("/")+1);
-					rmap.put("filename", filename);
-				}
-			}
+//			for (Map<String,Object> rmap:list) {
+//				if (null == rmap.get("filePath") || "".equals(rmap.get("filePath"))) {
+//					rmap.put("filename", "");
+//				} else {
+//					String filename = rmap.get("filePath").toString().substring(rmap.get("filePath").toString().lastIndexOf("/")+1);
+//					rmap.put("filename", filename);
+//				}
+//			}
 			
 			model.addAttribute("data", list);
 			model.addAttribute("totalCnt", totalCount);
@@ -475,14 +477,14 @@ public class ContentsController {
 			
 			List<Map<String, Object>> list = service.getContentsList(params);
 			
-			for (Map<String,Object> rmap:list) {
-				if (null == rmap.get("filePath") || "".equals(rmap.get("filePath"))) {
-					rmap.put("filename", "");
-				} else {
-					String filename = rmap.get("filePath").toString().substring(rmap.get("filePath").toString().lastIndexOf("/")+1);
-					rmap.put("filename", filename);
-				}
-			}
+//			for (Map<String,Object> rmap:list) {
+//				if (null == rmap.get("filePath") || "".equals(rmap.get("filePath"))) {
+//					rmap.put("filename", "");
+//				} else {
+//					String filename = rmap.get("filePath").toString().substring(rmap.get("filePath").toString().lastIndexOf("/")+1);
+//					rmap.put("filename", filename);
+//				}
+//			}
 			
 			model.addAttribute("data", list);
 			model.addAttribute("totalCnt", totalCount);
@@ -539,13 +541,39 @@ public class ContentsController {
 		String msg = "";
 		try {
 			if (null != params.get("contentType") && !"V".equals(params.get("contentType"))) {
-				String filepath = ContentFileUpload(req, res);
-				
-				String[] s_file = filepath.split("#@#");
-				
-				params.put("filePath", s_file[0]);
-				if (s_file.length > 1) {
-					params.put("thumbUrl", Const.CONTENTS_SERVER_PATH+s_file[1]);
+				if (null != params.get("updateType") && "edit".equals(params.get("updateType"))) 
+				{
+					// 파일 변경이 있을 경우
+					if (!params.get("file_route").toString().contains(Const.CONTENTS_SERVER_PATH)) 
+					{
+						params.put("fileChanged", "Y");
+						String filepath = ContentFileUpload(req, res);
+						
+						String[] s_file = filepath.split("#@#");
+						
+						params.put("fileName", s_file[0]);
+						params.put("filePath", s_file[1]);
+						if (s_file.length > 1) {
+							params.put("thumbUrl", Const.CONTENTS_SERVER_PATH+s_file[2]);
+						}
+					}
+					// 파일 변경이 없을 경우
+					else 
+					{
+						params.put("fileChanged", "N");
+					}
+				}
+				else
+				{
+					String filepath = ContentFileUpload(req, res);
+					
+					String[] s_file = filepath.split("#@#");
+					
+					params.put("fileName", s_file[0]);
+					params.put("filePath", s_file[1]);
+					if (s_file.length > 1) {
+						params.put("thumbUrl", Const.CONTENTS_SERVER_PATH+s_file[2]);
+					}
 				}
 			} else {
 //				String filepath = ContentFileUpload(req, res);
@@ -666,7 +694,7 @@ public class ContentsController {
 			
 			if (!"".equals(filename)) {
 				if (!"".equals(thumb)) {
-					filepath = Const.CONTENTS_SERVER_PATH+filename + "#@#" + thumb;
+					filepath = origName + "#@#" + Const.CONTENTS_SERVER_PATH+filename + "#@#" + thumb;
 					System.out.println("_____________________" + filepath + "\n" + "__________________"  + thumb);
 				} else {
 					filepath = Const.CONTENTS_SERVER_PATH+filename;

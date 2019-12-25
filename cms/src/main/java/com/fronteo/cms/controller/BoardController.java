@@ -476,7 +476,10 @@ public class BoardController {
 					params.put("filePath", params.get("file_route"));
 				} else {
 					String filepath = ContentFileUpload(req, res);
-					params.put("filePath", filepath);	
+					String[] s_file = filepath.split("#@#");
+					
+					params.put("fileName", s_file[0]);
+					params.put("filePath", s_file[1]);
 				}
 			}
 			
@@ -583,7 +586,7 @@ public class BoardController {
 			}
 			
 			if (!"".equals(filename)) {
-				filepath = Const.BBS_SERVER_PATH+filename;
+				filepath = origName + "#@#" + Const.BBS_SERVER_PATH+filename;
 			}
 			
 			

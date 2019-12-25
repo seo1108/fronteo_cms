@@ -122,13 +122,17 @@
 					                 </c:choose>
 					              </tr>
 					              <tr>
-					                 <th class="quiztable-content-center-white">URL</th>
+					                 <th class="quiztable-content-center-white">Youtube ID</th>
 						             <td>
 						             	<input type="text" name="url" id="url" value="${data.url}" class="form-control" style="display:inline;"/>
 						             </td>
-					              </tr>	
+					              </tr>	 
 							   </tbody>
 				           </table>
+				           
+				           <span class="f16">유투브 영상 주소의 붉은 색 부분이 유투브 아이디 값입니다.</span><br>
+						   <span class="f15" style="font-weight:bold;">** https://www.youtube.com/watch?v=</span><span class="f15" style="font-weight:bold;color:red;">RhOD-3n0uS4</span>
+						              
 						</div>
 					</form>
 					

@@ -154,6 +154,6 @@ if (ServletFileUpload.isMultipartContent(request)){
         }
     } 
 }
-response.sendRedirect(return1+return2+return3);
+response.sendRedirect(request.getContextPath()+return1+return2+return3);
  
 %>
