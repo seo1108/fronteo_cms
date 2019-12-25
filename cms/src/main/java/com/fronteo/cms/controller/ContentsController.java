@@ -553,8 +553,10 @@ public class ContentsController {
 						
 						params.put("fileName", s_file[0]);
 						params.put("filePath", s_file[1]);
-						if (s_file.length > 1) {
+						if (s_file.length > 2) {
 							params.put("thumbUrl", Const.CONTENTS_SERVER_PATH+s_file[2]);
+						} else {
+							params.put("thumbUrl", "");
 						}
 					}
 					// 파일 변경이 없을 경우
@@ -571,16 +573,16 @@ public class ContentsController {
 					
 					params.put("fileName", s_file[0]);
 					params.put("filePath", s_file[1]);
-					if (s_file.length > 1) {
+					if (s_file.length > 2) {
 						params.put("thumbUrl", Const.CONTENTS_SERVER_PATH+s_file[2]);
+					} else {
+						params.put("thumbUrl", "");
 					}
 				}
 			} else {
-//				String filepath = ContentFileUpload(req, res);
-//				if ("".equals(filepath)) {
-//					msg = "fail";
-//					return msg;
-//				}
+				params.put("fileName", "");
+				params.put("filePath", "");
+				params.put("thumbUrl", "");
 			}
 			
 			
@@ -697,7 +699,7 @@ public class ContentsController {
 					filepath = origName + "#@#" + Const.CONTENTS_SERVER_PATH+filename + "#@#" + thumb;
 					System.out.println("_____________________" + filepath + "\n" + "__________________"  + thumb);
 				} else {
-					filepath = Const.CONTENTS_SERVER_PATH+filename;
+					filepath = origName + "#@#" + Const.CONTENTS_SERVER_PATH+filename;
 				}
 			}
 			

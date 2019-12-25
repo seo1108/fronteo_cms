@@ -69,7 +69,7 @@
 			exposure = #{exposure},
 			contents = #{contents},
 			url = #{url},
-			<if test='fileChanged.equals("Y")'>
+			<if test='fileChanged != null and fileChanged.equals("Y")'>
 			thumbUrl = #{thumbUrl},
 			filePath = #{filePath},
 			fileName = #{fileName},

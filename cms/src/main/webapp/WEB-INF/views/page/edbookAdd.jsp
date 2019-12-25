@@ -358,7 +358,12 @@
 							  //location.href="/board/press";
 							  //window.location=document.referrer;
 							  //history.go(0);
-							  $.redirect( "edbookAdd", { chapterSeq : data, type : 'edit' }, "POST", "" );
+							  var type = '${data.type}';
+							  if ('edit' == type) {
+								  history.go(0);
+							  } else {
+	 							  $.redirect( "edbookAdd", { chapterSeq : data, type : 'edit' }, "POST", "" );
+							  }
 						  } 
 				     });
 				} else {
@@ -393,7 +398,7 @@
 							swal('삭제되었습니다.',"", "success")
 							.then(function(value)  { 
 								  if(value){
-									  window.location=document.referrer;
+									  $.redirect( "edbook", { }, "POST", "" );
 								  } 
 						     });
 						} else {
