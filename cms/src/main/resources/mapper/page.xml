@@ -99,7 +99,8 @@
 	<select id="getEbookList" resultType="hashmap">
 		SELECT 
 			chapterSeq, title, exposure, contents, url,
-			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate,
+			IFNULL(DATE_FORMAT(exposuredate,'%Y-%m-%d'), '') exposuredate
 		FROM TB_EDB_CHAPTER
 		WHERE 1=1
 		<if test='regFromDate != null and regToDate != null and !regFromDate.equals("") and !regToDate.equals("")'>
@@ -128,7 +129,8 @@
 	<select id="getEbookDetail" resultType="hashmap">
 		SELECT
 			chapterSeq, title, exposure, contents, url,
-			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate,
+			IFNULL(DATE_FORMAT(exposuredate,'%Y-%m-%d'), '') exposuredate
 		FROM TB_EDB_CHAPTER
 		WHERE chapterSeq = #{chapterSeq}
 	</select> 
@@ -142,9 +144,9 @@
 		keyProperty="chapterSeq">
 		INSERT INTO
 		TB_EDB_CHAPTER
-			(title, exposure, contents, url, regdate)
+			(title, exposure, contents, url, regdate, exposuredate)
 		VALUES
-			(#{title}, #{exposure}, #{contents}, #{url}, now())
+			(#{title}, #{exposure}, #{contents}, #{url}, now(), #{exposuredate})
 	</insert>
 	
 	<update id="updateEbook" parameterType="hashmap">
@@ -154,7 +156,8 @@
 			exposure = #{exposure},
 			contents = #{contents},
 			url = #{url},
-			moddate = now()
+			moddate = now(),
+			exposuredate = #{exposuredate}
 		WHERE 
 			chapterSeq = ${chapterSeq}
 	</update>

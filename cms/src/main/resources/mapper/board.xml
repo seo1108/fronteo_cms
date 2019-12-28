@@ -14,7 +14,8 @@
 		SELECT 
 			bbsSeq, bbsType, subType, title, exposure, contents, url, filePath, 
 			DATE_FORMAT(startDate,'%Y-%m-%d %H:%i:%s') startDate, DATE_FORMAT(endDate,'%Y-%m-%d %H:%i:%s') endDate, isAnytime,
-			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate,
+			IFNULL(DATE_FORMAT(exposuredate,'%Y-%m-%d'), '') exposuredate
 		FROM TB_BBS
 		WHERE 1=1
 			AND bbsType	= #{bbsType}
@@ -46,7 +47,8 @@
 		SELECT
 			bbsSeq, bbsType, subType, title, exposure, contents, url, filePath, fileName,
 			DATE_FORMAT(startDate,'%Y-%m-%d') startDate, DATE_FORMAT(endDate,'%Y-%m-%d') endDate, isAnytime,
-			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate,
+			IFNULL(DATE_FORMAT(exposuredate,'%Y-%m-%d'), '') exposuredate
 		FROM TB_BBS
 		WHERE bbsSeq = #{bbsSeq}
 			AND bbsType	= #{bbsType}
@@ -60,16 +62,16 @@
 		<if test='bbsType != null and bbsType.equals("P")'>
 			INSERT INTO
 			TB_BBS
-				(bbsType, subType, title, exposure, contents, url, filePath, fileName, regdate)
+				(bbsType, subType, title, exposure, contents, url, filePath, fileName, regdate, exposuredate)
 			VALUES
-				(#{bbsType}, #{subType}, #{title}, #{exposure}, #{contents}, #{url}, #{filePath}, #{fileName}, now())
+				(#{bbsType}, #{subType}, #{title}, #{exposure}, #{contents}, #{url}, #{filePath}, #{fileName}, now(), #{exposuredate})
 		</if>
 		<if test='bbsType != null and bbsType.equals("E")'>
 			INSERT INTO
 			TB_BBS
-				(bbsType, subType, title, exposure, contents, url, filePath, fileName, regdate)
+				(bbsType, subType, title, exposure, contents, url, filePath, fileName, regdate, exposuredate)
 			VALUES
-				(#{bbsType}, #{subType}, #{title}, #{exposure}, #{contents}, #{url}, #{filePath}, #{fileName}, now())
+				(#{bbsType}, #{subType}, #{title}, #{exposure}, #{contents}, #{url}, #{filePath}, #{fileName}, now(), #{exposuredate})
 		</if>
 		<if test='bbsType != null and bbsType.equals("C")'>
 			INSERT INTO
@@ -98,7 +100,8 @@
 				url = #{url},
 				filePath = #{filePath},
 				fileName = #{fileName},
-				moddate = now()
+				moddate = now(),
+				exposuredate = #{exposuredate}
 			WHERE 
 				bbsSeq = ${bbsSeq}
 		</if>
@@ -112,7 +115,8 @@
 				url = #{url},
 				filePath = #{filePath},
 				fileName = #{fileName},
-				moddate = now()
+				moddate = now(),
+				exposuredate = #{exposuredate}
 			WHERE 
 				bbsSeq = ${bbsSeq}
 		</if>

@@ -95,7 +95,32 @@
 						             <td>
 						             	<input type="text" name="date" id="regdate" value="${data.regdate}" class="form-control" style="display:inline;" readOnly/>
 						             </td>
-					              </tr>		
+					              </tr>	
+					              <tr>
+					                 <th class="quiztable-content-center-white">구분</th>
+					                 <c:choose>
+						                 <c:when test="${not empty data.type && data.type eq 'edit'}">
+						                 	<td>
+								             	<input type="radio" name="subType" value="1" style="margin-right: 10px;" 
+								             		<c:if test="${data.subType eq '1'}">checked</c:if>><span>eDiscovery</span>
+								                <input type="radio" name="subType" value="2" style="margin-right: 10px; margin-left: 50px;" 
+								                	<c:if test="${data.subType eq '2'}">checked</c:if>><span>Investigation</span>
+								                <input type="radio" name="subType" value="3" style="margin-right: 10px; margin-left: 50px;" 
+								                	<c:if test="${data.subType eq '3'}">checked</c:if>><span>AI Consulting</span>
+								                <input type="radio" name="subType" value="4" style="margin-right: 10px; margin-left: 50px;"
+								                	<c:if test="${data.subType eq '4'}">checked</c:if>><span>Products</span>
+								            </td>
+						                 </c:when>
+						                 <c:otherwise>
+						                 	<td>
+								             	<input type="radio" name="subType" value="1" style="margin-right: 10px;" checked/><span>eDiscovery</span>
+								                <input type="radio" name="subType" value="2" style="margin-right: 10px; margin-left: 50px;" /><span>Investigation</span>
+								                <input type="radio" name="subType" value="3" style="margin-right: 10px; margin-left: 50px;" /><span>AI Consulting</span>
+								                <input type="radio" name="subType" value="4" style="margin-right: 10px; margin-left: 50px;" /><span>Products</span>
+								            </td>   
+						                 </c:otherwise>
+					                 </c:choose>
+					              </tr>			
 					              <tr>
 					                 <th class="quiztable-content-center-white">제목</th>
 						             <td>
@@ -121,7 +146,7 @@
 						                 </c:otherwise>
 					                 </c:choose>
 					              </tr>		
-						          <tr>
+					              <tr>
 					                 <th class="quiztable-content-center-white">내용</th>
 						             <td><textarea name="contents" id="contents" rows="22" cols="170">${data.contents}</textarea></td>
 					              </tr>
@@ -173,13 +198,17 @@
 	
 	var oEditors = [];
 	var skinUrl = "../resources/smarteditor/SmartEditor2Skin.html";
+	//var aAdditionalFontSet = [["NotoSans-Regular", "NotoSans-Regular"], ["NotoSans-Medium", "NotoSans-Medium"],["NotoSans-Bold","NotoSans-Bold"]];
+	//var aAdditionalFontSet = [["NotoSansCJKkr", "기본글꼴"]];
 	
 	nhn.husky.EZCreator.createInIFrame({
 	    oAppRef: oEditors,
 	    elPlaceHolder: "contents",
+	    /* htParams : {
+			aAdditionalFontList : aAdditionalFontSet		// 추가 글꼴 목록
+		}, //boolean */
 	    sSkinURI: skinUrl,
 	    fCreator: "createSEditor2"
-	
 	});
 	
 	/* jQuery(document).ready(function(){

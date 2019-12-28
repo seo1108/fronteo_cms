@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="../resources/dist/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="../resources/plugins/select2/select2.min.css">
     <link rel="stylesheet" href="../resources/plugins/jQuerySimpleDPicker/jquery.simple-dtpicker.css">
+    <link rel="stylesheet" href="../resources/plugins/datepicker/datepicker3.css">
     <link rel="stylesheet" href="../resources/dist/css/custom.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -94,6 +95,18 @@
 					                 <th class="quiztable-content-center-white">작성일</th>
 						             <td>
 						             	<input type="text" name="date" id="regdate" value="${data.regdate}" class="form-control" style="display:inline;" readOnly/>
+						             </td>
+					              </tr>	
+					              <tr>
+					                 <th class="quiztable-content-center-white">웹표기시간</th>
+						             <td>
+						             	<div class="input-group date">
+	        		         				<div class="input-group-addon">
+	                		   					<i class="fa fa-calendar"></i>
+	                 						</div>
+	                 						<input type="text" class="form-control pull-left" style="width:250px;" id="expsdate" value="${data.exposuredate}">
+	                 						<input type="hidden" name="exposuredate" id="exposuredate" />
+	                 					</div>	
 						             </td>
 					              </tr>		
 					              <tr>
@@ -161,6 +174,8 @@
     <script src="../resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     
     <script src="../resources/plugins/jQuerySimpleDPicker/jquery.simple-dtpicker.js"></script>
+    <script src="../resources/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="../resources/plugins/datepicker/locales/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
     <!-- Slimscroll -->
@@ -176,6 +191,25 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	<script type="text/javascript">
+	
+	jQuery(document).ready(function(){
+		$('#expsdate').datepicker({
+			alendarWeeks: false,
+            todayHighlight: true,
+            autoclose: true,
+            setDate: new Date(),
+            format: "yyyy-mm-dd",
+            language: "kr"
+		});
+		
+		$("#expsdate").datepicker().on('changeDate', function (e) {
+			$("#exposuredate").val($('#expsdate').val().replaceAll('-', ''));
+		});
+		
+		if ('edit' != $('#updateType').val() || '' == $('#expsdate').val()) {
+			$('#expsdate').datepicker('update', new Date());
+		}
+    });
 	
 	function contentsInsert() {
     	if($.trim($("#title").val()) ==''){

@@ -5,7 +5,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -540,6 +542,17 @@ public class ContentsController {
             ,HttpServletResponse res) {
 		String msg = "";
 		try {
+			// 노출일이 없으면 오늘 날짜로 
+			if (null != params.get("exposuredate") && params.get("exposuredate").toString().length() != 8) 
+			{
+				SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd");
+						
+				Date date = new Date();
+						
+				String time = format.format(date);
+				params.put("exposuredate", time);
+			}
+						
 			if (null != params.get("contentType") && !"V".equals(params.get("contentType"))) {
 				if (null != params.get("updateType") && "edit".equals(params.get("updateType"))) 
 				{

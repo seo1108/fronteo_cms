@@ -13,7 +13,8 @@
 	<select id="getContentsList" resultType="hashmap">
 		SELECT 
 			contentSeq, contentType, title, exposure, contents, url, filePath, fileName,
-			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate,
+			IFNULL(DATE_FORMAT(exposuredate,'%Y-%m-%d'), '') exposuredate
 		FROM TB_CONTENTS
 		WHERE 1=1
 			AND contentType = #{contentType}
@@ -44,7 +45,8 @@
 	<select id="getContentsDetail" resultType="hashmap">
 		SELECT
 			contentSeq, contentType, title, exposure, contents, url, filePath, fileName,
-			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate
+			DATE_FORMAT(regdate,'%Y-%m-%d %H:%i:%s') regdate, DATE_FORMAT(moddate,'%Y-%m-%d %H:%i:%s') moddate,
+			IFNULL(DATE_FORMAT(exposuredate,'%Y-%m-%d'), '') exposuredate
 		FROM TB_CONTENTS
 		WHERE contentSeq = #{contentSeq}
 			AND contentType	= #{contentType}
@@ -57,9 +59,9 @@
 	<insert id="insertContents" parameterType="hashmap">
 		INSERT INTO
 		TB_CONTENTS
-			(contentType, title, exposure, contents, url, thumbUrl, filePath, fileName, regdate)
+			(contentType, title, exposure, contents, url, thumbUrl, filePath, fileName, regdate, exposuredate)
 		VALUES
-			(#{contentType}, #{title}, #{exposure}, #{contents}, #{url}, #{thumbUrl}, #{filePath}, #{fileName}, now())
+			(#{contentType}, #{title}, #{exposure}, #{contents}, #{url}, #{thumbUrl}, #{filePath}, #{fileName}, now(), #{exposuredate})
 	</insert>
 	
 	<update id="updateContents" parameterType="hashmap">
@@ -74,7 +76,8 @@
 			filePath = #{filePath},
 			fileName = #{fileName},
 			</if>
-			moddate = now()
+			moddate = now(),
+			exposuredate = #{exposuredate}
 		WHERE 
 			contentSeq = ${contentSeq}
 	</update>

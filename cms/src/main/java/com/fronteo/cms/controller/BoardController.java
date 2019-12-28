@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -410,6 +411,25 @@ public class BoardController {
 			
 			List<Map<String, Object>> list = service.getBbsList(params);
 			
+			for (Map<String,Object> rmap:list) {
+				if ("1".equals(rmap.get("subType"))) 
+				{
+					rmap.put("subTypeName", "eDiscovery");
+				} 
+				else if ("2".equals(rmap.get("subType"))) 
+				{
+					rmap.put("subTypeName", "Investigation");
+				}
+				else if ("3".equals(rmap.get("subType"))) 
+				{
+					rmap.put("subTypeName", "AI Consulting");
+				}
+				else if ("4".equals(rmap.get("subType"))) 
+				{
+					rmap.put("subTypeName", "Products");
+				}
+			}
+			
 			model.addAttribute("data", list);
 			model.addAttribute("totalCnt", totalCount);
 			model.addAttribute("page", page);
@@ -491,6 +511,17 @@ public class BoardController {
 			
 			
 			int result = 0;
+			
+			// 노출일이 없으면 오늘 날짜로 
+			if (null != params.get("exposuredate") && params.get("exposuredate").toString().length() != 8) 
+			{
+				SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd");
+						
+				Date date = new Date();
+						
+				String time = format.format(date);
+				params.put("exposuredate", time);
+			}
 			
 			if (null != params.get("updateType") && "edit".equals(params.get("updateType"))) 
 			{
