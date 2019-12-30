@@ -245,10 +245,14 @@
 	
 	<script type="text/javascript">
 	$(document).ready(function() {
+		
+	});
+	
+	jQuery(document).ready(function(){
 		var isupateneed = '${needOrderUpdate}';
 		if ('Y' == isupateneed) {
 			updateOrderWithoutAlert('${data.chapterSeq}')
-		}	
+		}
 		
 		$('#expsdate').datepicker({
 			alendarWeeks: false,
@@ -265,8 +269,10 @@
 		
 		if ('edit' != $('#updateType').val() || '' == $('#expsdate').val()) {
 			$('#expsdate').datepicker('update', new Date());
+		} else {
+			$("#exposuredate").val($('#expsdate').val().replaceAll('-', ''));
 		}
-	});
+    });
 	
 	
 	
@@ -467,6 +473,10 @@
     function go_list() {
     	$.redirect( "edbook", { }, "POST", "");
     }
+    
+    String.prototype.replaceAll = function(org, dest) {
+	    return this.split(org).join(dest);
+	}
 	</script>
   </body>
 </html>

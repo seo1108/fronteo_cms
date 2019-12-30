@@ -106,7 +106,7 @@
 	                		   					<i class="fa fa-calendar"></i>
 	                 						</div>
 	                 						<input type="text" class="form-control pull-left" style="width:250px;" id="expsdate" value="${data.exposuredate}">
-	                 						<input type="hidden" name="exposuredate" id="exposuredate" />
+	                 						<input type="hidden" name="exposuredate" id="exposuredate" value="${data.exposuredate}"/>
 	                 					</div>	
 						             </td>
 					              </tr>	
@@ -260,6 +260,8 @@
 		
 		if ('edit' != $('#updateType').val() || '' == $('#expsdate').val()) {
 			$('#expsdate').datepicker('update', new Date());
+		} else {
+			$("#exposuredate").val($('#expsdate').val().replaceAll('-', ''));
 		}
     });
 	
@@ -355,6 +357,10 @@
 			}
 		});
     }
+    
+    String.prototype.replaceAll = function(org, dest) {
+	    return this.split(org).join(dest);
+	}
 	</script>
   </body>
 </html>

@@ -12,6 +12,7 @@ public class Ebook implements Serializable {
     private String url;
     private String regdate;
     private String moddate;
+    private String exposuredate;
     
 	public int getChapterSeq() {
 		return chapterSeq;
@@ -54,6 +55,12 @@ public class Ebook implements Serializable {
 	}
 	public void setModdate(String moddate) {
 		this.moddate = moddate;
+	}
+	public String getExposuredate() {
+		return exposuredate;
+	}
+	public void setExposuredate(String exposuredate) {
+		this.exposuredate = exposuredate;
 	}
     
     

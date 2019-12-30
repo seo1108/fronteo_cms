@@ -25,6 +25,8 @@
 				<tr>
 					<th class="text-center"><input type="checkbox" name="selectAll" class="form-check-input" /></th>
 					<th class="text-center">챕터NO</th>
+					<th class="text-center">작성일</th>
+					<th class="text-center">웹표기일</th>
 					<th class="text-center">제목</th>
 					<th class="text-center">상태</th>
 					<th class="text-center">보기</th>
@@ -37,6 +39,8 @@
 							<input type="checkbox" name="selected" value="${list.chapterSeq}" class="form-check-input" />
 						</th>
 						<td class="quiztable-content-center-white"><fmt:formatNumber value="${list.chapterSeq}" pattern="#,###" /></td>
+						<td class="quiztable-content-center-white">${list.regdate}</td>
+						<td class="quiztable-content-center-white">${list.exposuredate}</td>
 						<td class="quiztable-content-center-white" style="width:50%;">${list.title}</td>
 						<td class="quiztable-content-center-white">
 							<c:choose>

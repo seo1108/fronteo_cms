@@ -257,6 +257,8 @@
 		
 		if ('edit' != $('#updateType').val() || '' == $('#expsdate').val()) {
 			$('#expsdate').datepicker('update', new Date());
+		} else {
+			$("#exposuredate").val($('#expsdate').val().replaceAll('-', ''));
 		}
     });
 

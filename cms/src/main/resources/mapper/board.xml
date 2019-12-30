@@ -83,9 +83,9 @@
 		<if test='bbsType != null and bbsType.equals("F")'>
 			INSERT INTO
 			TB_BBS
-				(bbsType, title, exposure, contents, regdate)
+				(bbsType, subType, title, exposure, contents, regdate)
 			VALUES
-				(#{bbsType}, #{title}, #{exposure}, #{contents}, now())
+				(#{bbsType}, #{subType}, #{title}, #{exposure}, #{contents}, now())
 		</if>			
 	</insert>
 	
@@ -137,6 +137,7 @@
 		<if test='bbsType != null and bbsType.equals("F")'>
 			UPDATE TB_BBS
 			SET
+				subType = #{subType},
 				title = #{title},
 				exposure = #{exposure},
 				contents = #{contents},

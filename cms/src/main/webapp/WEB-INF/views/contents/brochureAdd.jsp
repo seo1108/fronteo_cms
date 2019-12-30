@@ -211,6 +211,8 @@
 		
 		if ('edit' != $('#updateType').val() || '' == $('#expsdate').val()) {
 			$('#expsdate').datepicker('update', new Date());
+		} else {
+			$("#exposuredate").val($('#expsdate').val().replaceAll('-', ''));
 		}
     });
 	
@@ -302,6 +304,10 @@
 			}
 		});
     }
+    
+    String.prototype.replaceAll = function(org, dest) {
+	    return this.split(org).join(dest);
+	}
 	</script>
   </body>
 </html>

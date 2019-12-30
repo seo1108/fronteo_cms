@@ -353,6 +353,7 @@ public class PageController {
 				ebook.setExposure(params.get("exposure").toString());
 				ebook.setContents(params.get("contents").toString());
 				ebook.setUrl(params.get("url").toString());
+				ebook.setExposuredate(params.get("exposuredate").toString());
 				
 				result = service.insertEbook(ebook);
 				

@@ -193,8 +193,8 @@
 					swal("적용되었습니다.","", "success")
 					.then(function(value)  { 
 						  if(value){
-							  //$.redirect( "edbookAdd", { chapterSeq : chapterSeq, type : 'edit' }, "POST", "" );
-							  history.go(0);
+							  $.redirect( "edbookAdd", { chapterSeq : chapterSeq, type : 'edit' }, "POST", "" );
+							  //history.go(0);
 						  } 
 				     });
 				} else {

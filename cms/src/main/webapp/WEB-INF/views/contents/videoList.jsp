@@ -26,6 +26,7 @@
 					<th class="text-center"><input type="checkbox" name="selectAll" class="form-check-input" /></th>
 					<th class="text-center">NO</th>
 					<th class="text-center">작성일</th>
+					<th class="text-center">웹표기일</th>
 					<th class="text-center">제목</th>
 					<th class="text-center">Youtube ID</th>
 					<th class="text-center">상태</th>
@@ -40,6 +41,7 @@
 						</th>
 						<td class="quiztable-content-center-white"><fmt:formatNumber value="${list.contentSeq}" pattern="#,###" /></td>
 						<td class="quiztable-content-center-white">${list.regdate}</td>
+						<td class="quiztable-content-center-white">${list.exposuredate}</td>
 						<td class="quiztable-content-center-white" style="width:35%;">${list.title}</td>
 						<td class="quiztable-content-center-white">${list.url}</td>
 						<td class="quiztable-content-center-white">
