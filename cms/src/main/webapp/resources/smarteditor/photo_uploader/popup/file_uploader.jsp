@@ -123,6 +123,7 @@ if (ServletFileUpload.isMultipartContent(request)){
                     String realFileNm = "";
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
                     String today= formatter.format(new java.util.Date());
+                    name = name.replace("[", "").replace("]", "");
                     realFileNm = today+UUID.randomUUID().toString() + name.substring(name.lastIndexOf("."));
                     
                     String rlFileNm = filePath + realFileNm;

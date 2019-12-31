@@ -18,8 +18,8 @@ public class Const {
 	
 	
 	// 가동
-	public static final String UPLOAD_PATH					= "/data/";
-	public static final String PREVIEW_URL					= "http://ec2-13-124-226-238.ap-northeast-2.compute.amazonaws.com/resources/ediscovery/preview";
+	public static final String UPLOAD_PATH					= "/var/www/html/korea.fronteo.com/fronteo2/";
+	public static final String PREVIEW_URL					= "https://korea.fronteo.com/resources/ediscovery/preview";
 	
 	public static final String	BBS_FILE_UPLOAD_PATH		= UPLOAD_PATH + "upload/files/";
 	public static final String  BBS_SERVER_PATH				= "/upload/files/";

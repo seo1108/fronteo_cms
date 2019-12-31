@@ -14,10 +14,82 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Override 
 	public void addInterceptors(InterceptorRegistry registry) { 
 		registry.addInterceptor(interceptor) 
+				
+				.addPathPatterns("board/**")
+				.addPathPatterns("contents/**")
+				.addPathPatterns("page/**")
+				.addPathPatterns("salesforce/**")
+		
+				.addPathPatterns("**/board/**")
+				.addPathPatterns("**/contents/**")
+				.addPathPatterns("**/page/**")
+				.addPathPatterns("**/salesforce/**")
+				
+				.addPathPatterns("*/board/**")
+				.addPathPatterns("*/contents/**")
+				.addPathPatterns("*/page/**")
+				.addPathPatterns("*/salesforce/**")
+				
+				.addPathPatterns("/cms/board/**")
+				.addPathPatterns("/cms/contents/**")
+				.addPathPatterns("/cms/page/**")
+				.addPathPatterns("/cms/salesforce/**")
+				
+				.addPathPatterns("**/cms/board/**")
+				.addPathPatterns("**/cms/contents/**")
+				.addPathPatterns("**/cms/page/**")
+				.addPathPatterns("**/cms/salesforce/**")
+				
+				.addPathPatterns("*/cms/board/**")
+				.addPathPatterns("*/cms/contents/**")
+				.addPathPatterns("*/cms/page/**")
+				.addPathPatterns("*/cms/salesforce/**")
+				
 				.addPathPatterns("/board/**")
 				.addPathPatterns("/contents/**")
 				.addPathPatterns("/page/**")
 				.addPathPatterns("/salesforce/**");
+		
+		
+		
+		
+		
+//				.addPathPatterns("/**")
+//				.excludePathPatterns("/login")
+//				.excludePathPatterns("/resources")
+//				.excludePathPatterns("/login/**"); 
+		
+		
+		
+//				.addPathPatterns("**/board/**")
+//				.addPathPatterns("**/contents/**")
+//				.addPathPatterns("**/page/**")
+//				.addPathPatterns("**/salesforce/**")
+//				
+//				.addPathPatterns("*/board/**")
+//				.addPathPatterns("*/contents/**")
+//				.addPathPatterns("*/page/**")
+//				.addPathPatterns("*/salesforce/**")
+//				
+//				.addPathPatterns("cms/board/**")
+//				.addPathPatterns("cms/contents/**")
+//				.addPathPatterns("cms/page/**")
+//				.addPathPatterns("cms/salesforce/**")
+//				
+//				.addPathPatterns("**/cms/board/**")
+//				.addPathPatterns("**/cms/contents/**")
+//				.addPathPatterns("**/cms/page/**")
+//				.addPathPatterns("**/cms/salesforce/**")
+//				
+//				.addPathPatterns("*/cms/board/**")
+//				.addPathPatterns("*/cms/contents/**")
+//				.addPathPatterns("*/cms/page/**")
+//				.addPathPatterns("*/cms/salesforce/**")
+//				
+//				.addPathPatterns("/board/**")
+//				.addPathPatterns("/contents/**")
+//				.addPathPatterns("/page/**")
+//				.addPathPatterns("/salesforce/**");
 //				.excludePathPatterns("/login"); 
 		
 		WebMvcConfigurer.super.addInterceptors(registry);
