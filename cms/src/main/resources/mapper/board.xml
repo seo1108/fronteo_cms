@@ -76,9 +76,9 @@
 		<if test='bbsType != null and bbsType.equals("C")'>
 			INSERT INTO
 			TB_BBS
-				(bbsType, subType, title, exposure, contents, startDate, endDate, isAnytime, regdate)
+				(bbsType, subType, title, exposure, contents, startDate, endDate, isAnytime, regdate, exposuredate)
 			VALUES
-				(#{bbsType}, #{subType}, #{title}, #{exposure}, #{contents}, #{startDate}, #{endDate}, #{isAnytime}, now())
+				(#{bbsType}, #{subType}, #{title}, #{exposure}, #{contents}, #{startDate}, #{endDate}, #{isAnytime}, now(), #{exposuredate})
 		</if>	
 		<if test='bbsType != null and bbsType.equals("F")'>
 			INSERT INTO
@@ -130,7 +130,8 @@
 				startDate = #{startDate},
 				endDate = #{endDate},
 				isAnytime = #{isAnytime},
-				moddate = now()
+				moddate = now(),
+				exposuredate = #{exposuredate}
 			WHERE 
 				bbsSeq = ${bbsSeq}
 		</if>			
